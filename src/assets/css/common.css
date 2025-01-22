@@ -1,0 +1,54 @@
+/* 全局变量 */
+* {
+  /* 全局 */
+  --primary-color: #409eff;
+}
+
+/* 
+ * 常用样式
+ */
+.none {
+  display: none;
+}
+.pointer {
+  cursor: pointer;
+}
+.flex-1 {
+  flex: 1;
+}
+
+.line-clamp-1 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.line-clamp-2 {
+  word-wrap: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.position-relative {
+  position: relative;
+}

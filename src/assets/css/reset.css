@@ -1,0 +1,28 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
+.html, .body{
+  font-size: 14px;
+  color: #3f3f4a;
+}
+
+/* 滚动条的宽度 */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+/* 滚动条轨道的样式 */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+/* 滚动条的样式 */
+::-webkit-scrollbar-thumb {
+  background: #ddd;
+  border-radius: 2px;
+}
+/* 滚动条在鼠标悬停时的样式 */
+::-webkit-scrollbar-thumb:hover {
+  background: #aaa;
+}
