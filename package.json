@@ -3,9 +3,8 @@
   "private": true,
   "version": "0.0.1",
   "scripts": {
-    "start:local": "vite --mode local",
+    "start:dev": "vite --mode dev",
     "start": "vite",
-    "build:local": "vue-tsc --noEmit && vite build --mode local",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
     "clear": "rimraf dist && rimraf node_modules/.cache/ && rimraf node_modules/.vite",
