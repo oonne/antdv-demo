@@ -27,6 +27,7 @@ const { locale, antLocale } = storeToRefs(localeStore);
  * 初始化
  */
 const init = () => {
+  localeStore.initLocale();
 };
 
 onBeforeMount(() => {
