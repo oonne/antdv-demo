@@ -54,6 +54,7 @@ const pages: RouteRecordRaw[] = [
         component: () => import('@/pages/home/index.vue'),
         name: 'home',
         meta: {
+          noNeedLogin: true,
           sideKey: 'home',
           title: 'title_home',
         },

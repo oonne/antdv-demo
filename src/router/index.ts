@@ -5,7 +5,7 @@ import pages from './pages';
 // 默认跳转到首页
 pages.push({
   path: '/',
-  redirect: '/profile/home',
+  redirect: '/home/index',
 });
 
 // 找不到则跳转到404
