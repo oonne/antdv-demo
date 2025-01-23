@@ -25,9 +25,7 @@
 </template>
 
 <script lang="ts" setup>
-import {
-  ref, watch,
-} from 'vue';
+import { ref } from 'vue';
 import AppView from './app-view.vue';
 import HeaderView from './header-view.vue';
 import SideView from './side-view.vue';
@@ -35,20 +33,16 @@ import SideView from './side-view.vue';
 /*
  * 是否折叠侧导航
  */
-const defaultCollapsed = localStorage.getItem('SETTING_SIDE_COLLAPSED') === 'true';
-const collapsed = ref<boolean>(defaultCollapsed);
-watch(collapsed, (value) => {
-  localStorage.setItem('SETTING_SIDE_COLLAPSED', value.toString());
-});
+const collapsed = ref<boolean>(true);
 
 </script>
 
 <style scoped>
-.page-layout{
+.page-layout {
   min-height: 100vh;
-  min-width: 1180px;
 }
-.header{
+
+.header {
   background-color: #fff;
   padding: 0 24px;
   height: var(--header-height);

@@ -1,7 +1,12 @@
 /* 全局变量 */
 * {
-  /* 全局 */
-  --primary-color: #409eff;
+  /* 颜色 */
+  --primary-color: #6345b9;
+
+  /* 尺寸 */
+  --header-height: 36px;
+  --app-view-margin: 4px;
+  --app-view-padding: 4px;
 }
 
 /* 

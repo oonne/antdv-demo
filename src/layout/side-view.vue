@@ -3,9 +3,17 @@
     class="header"
     @click="$emit('update:collapsed', !collapsed)"
   >
-    <!-- LOGO -->
-    <div :class="`${collapsed ? 'logo-collapsed': 'logo'}`">
-      LOGO
+    <!-- Ring -->
+    <div
+      class="sidebar-logo"
+      :class="`${collapsed ? 'logo logo-collapsed' : 'logo'}`"
+      :style="logoStyle"
+    >
+      <img
+        :src="AuraImg"
+        class="logo-rotation"
+        :style="rotationStyle"
+      >
     </div>
   </div>
 
@@ -22,12 +30,8 @@
       key="key"
     >
       <!-- 二级导航 -->
-      <template
-        v-if="sideMenu.children"
-      >
-        <a-sub-menu
-          :key="sideMenu.key"
-        >
+      <template v-if="sideMenu.children">
+        <a-sub-menu :key="sideMenu.key">
           <template #title>
             <Icon
               v-if="sideMenu.icon"
@@ -66,10 +70,13 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch, computed } from 'vue';
+import {
+  ref, watch, computed, onMounted,
+} from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import SideMenuConfig from '@/config/side-menu';
 import Icon from '@/components/icon-svg/index.vue';
+import AuraImg from '@/assets/img/aura.png';
 
 const route = useRoute();
 const router = useRouter();
@@ -127,36 +134,119 @@ const onSelectMenu = (selectedItem: any) => {
   const key = selectedItem.key as string;
   router.push({ name: key });
 };
+
+/* 旋转光环 */
+const logoStyle = ref({});
+const rotationStyle = ref({});
+
+const initStyle = () => {
+  const now = new Date();
+  const seconds = now.getSeconds();
+  const animationDelay = `-${seconds}s`;
+  logoStyle.value = {
+    'animation-delay': animationDelay,
+    'background-image': 'linear-gradient(135deg, #e7604a, #de6262)',
+  };
+  rotationStyle.value = {
+    display: 'block',
+    'animation-delay': animationDelay,
+  };
+};
+
+onMounted(() => {
+  initStyle();
+});
 </script>
 
 <style scoped>
-.header{
+.header {
   display: flex;
   cursor: pointer;
 }
 
-.logo{
-  width: 160px;
-  height: var(--header-height);
-}
-.logo-collapsed{
-  width: var(--header-height);
-  height: var(--header-height);
-  overflow: hidden;
-}
-.logo-img{
-  width: 160px;
-  height: var(--header-height);
+/* LOGO */
+.logo {
+  width: 200px;
+  height: 200px;
 }
 
-.collapsed-btn{
-  font-size: 18px;
-  line-height: var(--header-height);
-  color: var(--color-primary);
-  opacity: 0.4;
+.logo-collapsed {
+  width: 80px;
+  height: 80px;
 }
 
-.side-menu{
+.sidebar-logo {
+  display: block;
+  background-image: -webkit-linear-gradient(135deg, #333, #333);
+  background-image: linear-gradient(135deg, #333, #333);
+  -webkit-animation: hue 60s linear infinite;
+  animation: hue 60s linear infinite;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@-webkit-keyframes hue {
+  from {
+    -webkit-filter: hue-rotate(0deg);
+    filter: hue-rotate(0deg);
+  }
+
+  to {
+    -webkit-filter: hue-rotate(-360deg);
+    filter: hue-rotate(-360deg);
+  }
+}
+
+@keyframes hue {
+  from {
+    -webkit-filter: hue-rotate(0deg);
+    filter: hue-rotate(0deg);
+  }
+
+  to {
+    -webkit-filter: hue-rotate(-360deg);
+    filter: hue-rotate(-360deg);
+  }
+}
+
+.sidebar-logo img {
+  height: 88%;
+  width: 88%;
+}
+
+.logo-rotation {
+  display: none;
+  -webkit-animation: rotation linear 30s infinite;
+  animation: rotation linear 30s infinite;
+}
+
+@-webkit-keyframes rotation {
+  from {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotation {
+  from {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+/* 菜单 */
+.side-menu {
   max-height: calc(100vh - var(--header-height));
   overflow-y: auto;
 }

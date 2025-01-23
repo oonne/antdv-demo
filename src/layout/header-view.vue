@@ -4,20 +4,17 @@
     align="center"
   >
     <!-- 标题 -->
-    <a-space class="title">
+    <div class="title">
       {{ title }}
-    </a-space>
+    </div>
   </a-flex>
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from 'vue';
+import { ref } from 'vue';
 import { useRoute, useRouter, RouteLocationNormalizedLoaded } from 'vue-router';
-import useEventOn from '@/hooks/use-event-on';
 import { Type } from '@/utils/index';
-import i18n from '@/locales/i18n';
 
-const { t } = i18n.global;
 const { isString } = Type;
 
 /*
@@ -25,7 +22,7 @@ const { isString } = Type;
  */
 const title = ref<string>('');
 const updateTitle = (raw: RouteLocationNormalizedLoaded) => {
-  title.value = isString(raw.meta?.title) ? t(raw.meta.title) : '';
+  title.value = isString(raw.meta?.title) ? raw.meta.title : '';
 };
 
 // 监听路由更新
@@ -34,16 +31,6 @@ const router = useRouter();
 updateTitle(route);
 router.afterEach((toRoute) => {
   updateTitle(toRoute);
-});
-
-// 监听语言设置
-watch(() => i18n.global.locale, () => {
-  updateTitle(route);
-});
-
-// 监听页面修改标题
-useEventOn('UPDATE_PAGE_TITLE', 'layout-header', (text: string) => {
-  title.value = text;
 });
 </script>
 
