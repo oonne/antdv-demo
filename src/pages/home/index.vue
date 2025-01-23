@@ -14,6 +14,6 @@ import IconSvg from '@/components/icon-svg/index.vue';
 
 <style scoped>
 .icon{
-  width: 24px;
+  width: 98px;
 }
 </style>

@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import { CodeInspectorPlugin } from 'code-inspector-plugin';
+import svgLoader from 'vite-svg-loader';
 import { resolve } from 'path';
 import vue from '@vitejs/plugin-vue';
 
@@ -7,6 +8,7 @@ import vue from '@vitejs/plugin-vue';
 export default defineConfig({
   plugins: [
     vue(),
+    svgLoader(),
     CodeInspectorPlugin({
       bundler: 'vite',
     }),

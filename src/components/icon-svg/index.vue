@@ -1,13 +1,12 @@
 <template>
-  <img
-    v-if="iconUrl"
-    :src="iconUrl"
-    alt=""
-  >
+  <component
+    :is="svgIcon"
+    v-if="svgIcon"
+  />
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { shallowRef, watchEffect } from 'vue';
 
 const props = defineProps({
   // 图标名称（不需要带.svg后缀）
@@ -17,16 +16,18 @@ const props = defineProps({
   },
 });
 
-// 计算图标URL
-const iconUrl = computed(() => {
+const svgIcon = shallowRef(null);
+
+watchEffect(async () => {
   try {
-    // 动态导入SVG文件
-    return new URL(`../../assets/icon/${props.icon}.svg`, import.meta.url).href;
+    const module = await import(`@/assets/icon/${props.icon}.svg`);
+    svgIcon.value = module.default;
   } catch (error) {
     console.warn(`Icon not found: ${props.icon}.svg`);
-    return '';
+    svgIcon.value = null;
   }
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+</style>
