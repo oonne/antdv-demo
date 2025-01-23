@@ -1,4 +1,5 @@
 import type { RouteRecordRaw } from 'vue-router';
+import Layout from '@/layout/index.vue';
 
 const pages: RouteRecordRaw[] = [
   /*
@@ -31,14 +32,34 @@ const pages: RouteRecordRaw[] = [
   },
 
   // 登录
-  // {
-  //   path: '/login',
-  //   name: 'login',
-  //   component: () => import('@/pages/system/login/login-form.vue'),
-  //   meta: {
-  //     noNeedLogin: true,
-  //   },
-  // },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('@/pages/system/login/login-form.vue'),
+    meta: {
+      noNeedLogin: true,
+    },
+  },
+
+  /*
+   * 首页
+   */
+  {
+    path: '/home',
+    component: Layout,
+    children: [
+      // 首页
+      {
+        path: 'index',
+        component: () => import('@/pages/home/index.vue'),
+        name: 'home',
+        meta: {
+          sideKey: 'home',
+          title: 'title_home',
+        },
+      },
+    ],
+  },
 ];
 
 export default pages;

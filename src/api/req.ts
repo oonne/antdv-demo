@@ -4,7 +4,7 @@ import config from '@/config/index';
 import { Utils } from '@/utils/index';
 
 const { VITE_BASE_URL } = import.meta.env;
-const { version, source, apiTimeOut } = config;
+const { version, apiTimeOut } = config;
 const { randomChars } = Utils;
 
 /*
@@ -24,7 +24,7 @@ const getLang = () => localStorage.getItem('LOCALE') || '';
 const generateReqId = () => {
   const timestamp = new Date().getTime();
   const uuid = getUUID();
-  return `${source}-${timestamp}-${uuid.slice(-4)}-${randomChars(4)}`;
+  return `${timestamp}-${uuid.slice(-4)}-${randomChars(4)}`;
 };
 
 /*
@@ -44,12 +44,11 @@ instance.interceptors.request.use(
       options.headers['Content-Type'] = 'application/json; charset=utf-8';
     }
 
-    options.headers['af-source'] = source;
-    options.headers['af-version'] = version;
-    options.headers['af-uuid'] = getUUID();
-    options.headers['af-reqid'] = generateReqId();
-    options.headers['af-token'] = getToken();
-    options.headers['af-lang'] = getLang();
+    options.headers['x-version'] = version;
+    options.headers['x-uuid'] = getUUID();
+    options.headers['x-reqid'] = generateReqId();
+    options.headers['x-token'] = getToken();
+    options.headers['x-lang'] = getLang();
     return options;
   },
 );
