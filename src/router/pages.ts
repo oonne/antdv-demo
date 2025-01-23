@@ -56,7 +56,7 @@ const pages: RouteRecordRaw[] = [
         meta: {
           noNeedLogin: true,
           sideKey: 'home',
-          title: 'title_home',
+          title: '首页',
         },
       },
     ],
