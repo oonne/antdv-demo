@@ -13,18 +13,35 @@ const sideMenu: ISideConfig[] = [
   {
     key: 'home',
     title: '首页',
-    icon: 'HomeOutlined',
+    icon: 'home',
   },
 
   // 系统
   {
     key: 'system',
     title: '系统',
-    icon: 'TeamOutlined',
+    icon: 'setting',
     children: [
       {
         key: 'staff',
         title: '账号管理',
+      },
+      {
+        key: 'recycle',
+        title: '回收站',
+      },
+    ],
+  },
+
+  // 博客
+  {
+    key: 'blog',
+    title: '博客',
+    icon: 'setting',
+    children: [
+      {
+        key: 'blog',
+        title: '文章列表',
       },
     ],
   },

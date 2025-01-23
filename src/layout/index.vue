@@ -7,8 +7,7 @@
       :trigger="null"
       collapsible
     >
-      侧导航导航TODO
-      <!-- <SideView v-model:collapsed="collapsed" /> -->
+      <SideView v-model:collapsed="collapsed" />
     </a-layout-sider>
 
     <a-layout>
@@ -31,7 +30,7 @@ import {
 } from 'vue';
 import AppView from './app-view.vue';
 import HeaderView from './header-view.vue';
-// import SideView from './side-view.vue';
+import SideView from './side-view.vue';
 
 /*
  * 是否折叠侧导航
