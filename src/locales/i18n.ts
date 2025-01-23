@@ -29,6 +29,15 @@ const i18n = createI18n({
     zh_CN: getMsg('zh_CN'),
     zh_TW: getMsg('zh_TW'),
     en_US: getMsg('en_US'),
+    es_ES: getMsg('es_ES'),
+    fr_FR: getMsg('fr_FR'),
+    ru_RU: getMsg('ru_RU'),
+    pt_PT: getMsg('pt_PT'),
+    de_DE: getMsg('de_DE'),
+    ja_JP: getMsg('ja_JP'),
+    it_IT: getMsg('it_IT'),
+    ko_KR: getMsg('ko_KR'),
+    vi_VN: getMsg('vi_VN'),
   },
 });
 
