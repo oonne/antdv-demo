@@ -3,7 +3,7 @@ export type Role = 1 | 2 | 3 | 4;
 
 /* 租户已购买套餐信息 */
 export interface IStaff {
-  id: string;
+  id?: string;
   staffId: string;
   name: string;
   password?: string;

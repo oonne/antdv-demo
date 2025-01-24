@@ -37,41 +37,37 @@ const instance = axios.create({
 });
 
 // 请求
-instance.interceptors.request.use(
-  (reqOptions) => {
-    const options = reqOptions;
-    if (!options.headers['Content-Type']) {
-      options.headers['Content-Type'] = 'application/json; charset=utf-8';
-    }
+instance.interceptors.request.use((reqOptions) => {
+  const options = reqOptions;
+  if (!options.headers['Content-Type']) {
+    options.headers['Content-Type'] = 'application/json; charset=utf-8';
+  }
 
-    options.headers['x-version'] = version;
-    options.headers['x-uuid'] = getUUID();
-    options.headers['x-reqid'] = generateReqId();
-    options.headers['x-token'] = getToken();
-    options.headers['x-lang'] = getLang();
-    return options;
-  },
-);
+  options.headers.Authorization = `Bearer ${getToken()}`;
+  options.headers['x-version'] = version;
+  options.headers['x-uuid'] = getUUID();
+  options.headers['x-reqid'] = generateReqId();
+  options.headers['x-lang'] = getLang();
+  return options;
+});
 
 // 响应
-instance.interceptors.response.use(
-  (res) => {
-    const { data, status } = res;
+instance.interceptors.response.use((res) => {
+  const { data, status } = res;
 
-    // 正常响应
-    if (status === 200 && data.code === 0) {
-      return Promise.resolve(data);
-    }
+  // 正常响应
+  if ([200, 201].includes(status) && data.code === 0) {
+    return Promise.resolve(data);
+  }
 
-    // 401 登录过期
-    if (status === 401 || data.code === 401) {
-      console.warn('登录过期');
-      busEmit('LOGOUT');
-      window.location.href = `/${window?.location?.hash}`;
-    }
+  // 401 登录过期
+  if (status === 401 || data.code === 401) {
+    console.warn('登录过期');
+    busEmit('LOGOUT');
+    window.location.href = `/${window?.location?.hash}`;
+  }
 
-    return Promise.reject(data);
-  },
-);
+  return Promise.reject(data);
+});
 
 export default instance;

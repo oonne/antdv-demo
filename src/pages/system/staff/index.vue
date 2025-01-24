@@ -3,7 +3,10 @@
     gap="small"
     justify="start"
   >
-    <a-button type="primary">
+    <a-button
+      type="primary"
+      @click="router.push({name: 'edit-staff'})"
+    >
       新增
     </a-button>
   </a-flex>
@@ -38,11 +41,14 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import { message, TableColumnsType } from 'ant-design-vue';
 import useTable from '@/hooks/use-table';
 import { staffApi } from '@/api/index';
 import { to, buildErrorMsg } from '@/utils/index';
 import type { IStaff } from '@/types/staff';
+
+const router = useRouter();
 
 /*
  * 列表项
@@ -85,11 +91,9 @@ const getList = async () => {
     return;
   }
 
-  console.log(res);
-
-  // dataList.value = res.data.list;
-  // pagination.value.total = res.data.total;
-  // pagination.value.current = res.data.pageNo;
+  dataList.value = res.data.list;
+  pagination.value.total = res.data.total;
+  pagination.value.current = res.data.pageNo;
 };
 setGetDataFunction(getList);
 
