@@ -20,7 +20,7 @@ const sideMenu: ISideConfig[] = [
   {
     key: 'system',
     title: '系统',
-    icon: 'setting',
+    icon: 'settings',
     children: [
       {
         key: 'staff',
@@ -37,11 +37,15 @@ const sideMenu: ISideConfig[] = [
   {
     key: 'blog',
     title: '博客',
-    icon: 'setting',
+    icon: 'blog',
     children: [
       {
-        key: 'blog',
+        key: 'blog-list',
         title: '文章列表',
+      },
+      {
+        key: 'about-me',
+        title: '关于我',
       },
     ],
   },

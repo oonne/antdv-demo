@@ -6,12 +6,12 @@
     <!-- Ring -->
     <div
       class="sidebar-logo"
-      :class="`${collapsed ? 'logo logo-collapsed' : 'logo'}`"
       :style="logoStyle"
     >
       <img
         :src="AuraImg"
         class="logo-rotation"
+        :class="`${collapsed ? 'logo-collapsed' : 'logo'}`"
         :style="rotationStyle"
       >
     </div>
@@ -27,28 +27,28 @@
   >
     <template
       v-for="sideMenu of sideMenuList"
-      key="key"
+      :key="sideMenu.key"
     >
       <!-- 二级导航 -->
       <template v-if="sideMenu.children">
-        <a-sub-menu :key="sideMenu.key">
-          <template #title>
+        <a-sub-menu
+          :key="sideMenu.key"
+          :title="sideMenu.title"
+        >
+          <template #icon>
             <Icon
               v-if="sideMenu.icon"
               :icon="sideMenu.icon"
+              class="side-menu-icon"
             />
-            <span>{{ sideMenu.title }}</span>
           </template>
+
           <a-menu-item
             v-for="subMenu of sideMenu.children"
             :key="subMenu.key"
+            :title="subMenu.title"
           >
-            <a-tooltip
-              :title="subMenu.title"
-              placement="right"
-            >
-              <span>{{ subMenu.title }}</span>
-            </a-tooltip>
+            <span>{{ subMenu.title }}</span>
           </a-menu-item>
         </a-sub-menu>
       </template>
@@ -59,10 +59,13 @@
         :key="sideMenu.key"
         :title="sideMenu.title"
       >
-        <Icon
-          v-if="sideMenu.icon"
-          :icon="sideMenu.icon"
-        />
+        <template #icon>
+          <Icon
+            v-if="sideMenu.icon"
+            :icon="sideMenu.icon"
+            class="side-menu-icon"
+          />
+        </template>
         <span>{{ sideMenu.title }}</span>
       </a-menu-item>
     </template>
@@ -165,25 +168,14 @@ onMounted(() => {
 }
 
 /* LOGO */
-.logo {
-  width: 200px;
-  height: 200px;
-}
-
-.logo-collapsed {
-  width: 80px;
-  height: 80px;
-}
-
 .sidebar-logo {
   display: block;
   background-image: -webkit-linear-gradient(135deg, #333, #333);
   background-image: linear-gradient(135deg, #333, #333);
-  -webkit-animation: hue 60s linear infinite;
   animation: hue 60s linear infinite;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  padding: 4px;
+  width: 200px;
+  height: 80px;
 }
 
 @-webkit-keyframes hue {
@@ -211,8 +203,8 @@ onMounted(() => {
 }
 
 .sidebar-logo img {
-  height: 88%;
-  width: 88%;
+  height: 72px;
+  width: 72px;
 }
 
 .logo-rotation {
@@ -249,5 +241,11 @@ onMounted(() => {
 .side-menu {
   max-height: calc(100vh - var(--header-height));
   overflow-y: auto;
+}
+
+.side-menu-icon {
+  width: 12px;
+  height: 12px;
+  transform: scale(1.6);
 }
 </style>
