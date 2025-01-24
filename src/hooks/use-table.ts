@@ -1,5 +1,5 @@
 import { ref } from 'vue';
-import { TableColumnType } from 'ant-design-vue';
+import { TableColumnType, PaginationProps } from 'ant-design-vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useBasicStore } from '@/store/index';
 
@@ -23,6 +23,11 @@ const useTable = () => {
   };
 
   /*
+   * 加载中
+   */
+  const loading = ref(false);
+
+  /*
    * 分页
    */
   const pagination = ref({
@@ -31,7 +36,14 @@ const useTable = () => {
     total: 0,
   });
 
-  /* 翻页 */
+  /*
+   * 分页、排序、筛选变化时触发
+   */
+  const changeTable = (paginationProps: PaginationProps, filters: any, sorter: any) => {
+    console.log(paginationProps, filters, sorter);
+  };
+
+  /* 分页 */
   const changePage = (current: number) => {
     if (current) {
       pagination.value.current = current;
@@ -46,7 +58,7 @@ const useTable = () => {
     });
   };
 
-  /* 修改页数 */
+  // /* 修改页数 */
   const changePageSize = (size: number) => {
     pagination.value.pageSize = size;
     pagination.value.current = 1;
@@ -66,7 +78,9 @@ const useTable = () => {
   return {
     setGetDataFunction,
 
+    loading,
     pagination,
+    changeTable,
     changePage,
     changePageSize,
 
