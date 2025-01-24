@@ -80,6 +80,17 @@ const pages: RouteRecordRaw[] = [
           title: '账号管理',
         },
       },
+      // 新增/编辑成员
+      {
+        path: 'edit-staff',
+        component: () => import('@/pages/system/staff/edit-staff.vue'),
+        name: 'edit-staff',
+        meta: {
+          noNeedLogin: true,
+          sideKey: 'staff',
+          title: '编辑成员',
+        },
+      },
       // 回收站
       {
         path: 'recycle',

@@ -1,5 +1,7 @@
-import auth from './modules/auth';
+import authApi from './modules/auth';
+import staffApi from './modules/staff';
 
 export {
-  auth,
+  authApi,
+  staffApi,
 };

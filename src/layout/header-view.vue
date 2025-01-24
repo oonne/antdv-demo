@@ -14,6 +14,7 @@
 import { ref } from 'vue';
 import { useRoute, useRouter, RouteLocationNormalizedLoaded } from 'vue-router';
 import { Type } from '@/utils/index';
+import useEventOn from '@/hooks/use-event-on';
 
 const { isString } = Type;
 
@@ -31,6 +32,11 @@ const router = useRouter();
 updateTitle(route);
 router.afterEach((toRoute) => {
   updateTitle(toRoute);
+});
+
+// 监听页面修改标题
+useEventOn('UPDATE_PAGE_TITLE', 'layout-header', (text: string) => {
+  title.value = text;
 });
 </script>
 

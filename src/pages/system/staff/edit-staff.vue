@@ -1,9 +1,7 @@
 <template>
   <div>
-    <a-alert
-      message="首页"
-      type="success"
-    />
+    编辑表单
+    <a-button>保存</a-button>
   </div>
 </template>
 
