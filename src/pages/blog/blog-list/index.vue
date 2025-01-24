@@ -1,6 +1,6 @@
 <template>
   <div>
-    首页
+    博客列表
   </div>
 </template>
 

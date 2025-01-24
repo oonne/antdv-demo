@@ -1,6 +1,6 @@
 <template>
   <div>
-    首页
+    回收站
   </div>
 </template>
 

@@ -9,7 +9,7 @@ const pages: RouteRecordRaw[] = [
   {
     path: '/403',
     name: '403',
-    component: () => import('@/pages/system/exception/index.vue'),
+    component: () => import('@/pages/exception/index.vue'),
     meta: {
       noNeedLogin: true,
     },
@@ -17,7 +17,7 @@ const pages: RouteRecordRaw[] = [
   {
     path: '/404',
     name: '404',
-    component: () => import('@/pages/system/exception/index.vue'),
+    component: () => import('@/pages/exception/index.vue'),
     meta: {
       noNeedLogin: true,
     },
@@ -25,7 +25,7 @@ const pages: RouteRecordRaw[] = [
   {
     path: '/500',
     name: '500',
-    component: () => import('@/pages/system/exception/index.vue'),
+    component: () => import('@/pages/exception/index.vue'),
     meta: {
       noNeedLogin: true,
     },
@@ -35,7 +35,7 @@ const pages: RouteRecordRaw[] = [
   {
     path: '/login',
     name: 'login',
-    component: () => import('@/pages/system/login/login-form.vue'),
+    component: () => import('@/pages/login/login-form.vue'),
     meta: {
       noNeedLogin: true,
     },
@@ -57,6 +57,70 @@ const pages: RouteRecordRaw[] = [
           noNeedLogin: true,
           sideKey: 'home',
           title: '首页',
+        },
+      },
+    ],
+  },
+
+  /*
+   * 系统
+   */
+  {
+    path: '/system',
+    component: Layout,
+    children: [
+      // 成员管理
+      {
+        path: 'staff',
+        component: () => import('@/pages/system/staff/index.vue'),
+        name: 'staff',
+        meta: {
+          noNeedLogin: true,
+          sideKey: 'staff',
+          title: '账号管理',
+        },
+      },
+      // 回收站
+      {
+        path: 'recycle',
+        component: () => import('@/pages/system/recycle/index.vue'),
+        name: 'recycle',
+        meta: {
+          noNeedLogin: true,
+          sideKey: 'recycle',
+          title: '回收站',
+        },
+      },
+    ],
+  },
+
+  /*
+   * 博客
+   */
+  {
+    path: '/blog',
+    component: Layout,
+    children: [
+      // 博客列表
+      {
+        path: 'blog-list',
+        component: () => import('@/pages/blog/blog-list/index.vue'),
+        name: 'blog-list',
+        meta: {
+          noNeedLogin: true,
+          sideKey: 'blog-list',
+          title: '博客列表',
+        },
+      },
+      // 关于我
+      {
+        path: 'about-me',
+        component: () => import('@/pages/blog/about-me/index.vue'),
+        name: 'about-me',
+        meta: {
+          noNeedLogin: true,
+          sideKey: 'about-me',
+          title: '关于我',
         },
       },
     ],
