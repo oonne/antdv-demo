@@ -10,14 +10,26 @@
 }
 
 /* 
+ * 每页内容顶部，用于放新增按钮和统计数据
+ */
+.app-view-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+/* 
  * 常用样式
  */
 .none {
   display: none;
 }
+
 .pointer {
   cursor: pointer;
 }
+
 .flex-1 {
   flex: 1;
 }

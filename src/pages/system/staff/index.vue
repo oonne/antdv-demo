@@ -1,25 +1,26 @@
 <template>
-  <a-flex
-    gap="small"
-    justify="start"
-  >
-    <a-button
-      type="primary"
-      @click="router.push({name: 'edit-staff'})"
-    >
-      新增
-    </a-button>
-  </a-flex>
+  <div class="app-view-header">
+    <a-space>
+      <a-button
+        type="primary"
+        @click="router.push({ name: 'edit-staff' })"
+      >
+        新增
+      </a-button>
+    </a-space>
+
+    <div class="app-view-header-sum">
+      总计: 2
+    </div>
+  </div>
 
   <!-- 表格 -->
   <a-table
-    id="table"
     :data-source="dataList"
     :columns="columns"
     :loading="loading"
     row-key="id"
-    :scroll="{ x: 'max-content' }"
-    :row-class-name="(_record: any, index: number) => (index % 2 === 1 ? 'table-striped' : null)"
+    :row-class-name="rowClassName"
     @resize-column="onResizeColumn"
     @change="changeTable"
   >
@@ -73,7 +74,7 @@ const columns = ref<TableColumnsType>([
 /* 列表 */
 const dataList = ref<IStaff[]>([]);
 const {
-  loading, setGetDataFunction, pagination, changeTable, onResizeColumn,
+  loading, setGetDataFunction, pagination, changeTable, onResizeColumn, rowClassName,
 } = useTable();
 
 /* 查询列表 */

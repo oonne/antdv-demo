@@ -72,6 +72,9 @@ const useTable = () => {
     column.width = width;
   };
 
+  /* 斑马线 */
+  const rowClassName = (_record: any, index: number) => (index % 2 === 1 ? 'table-striped' : null);
+
   /*
    * 返回的属性和方法
    */
@@ -85,6 +88,7 @@ const useTable = () => {
     changePageSize,
 
     onResizeColumn,
+    rowClassName,
   };
 };
 
