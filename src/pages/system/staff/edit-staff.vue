@@ -4,6 +4,7 @@
       ref="formRef"
       :model="formData"
       layout="vertical"
+      hide-required-mark
     >
       <a-form-item
         label="账号名"
@@ -18,8 +19,8 @@
 
       <a-form-item
         label="密码"
-        name="name"
-        :rules="[{ required: !!formData.staffId }]"
+        name="password"
+        :rules="[{ required: !formData.staffId }]"
       >
         <a-input
           v-model:value="formData.password"
@@ -36,6 +37,10 @@
             合伙人
           </a-select-option>
         </a-select>
+      </a-form-item>
+
+      <a-form-item label="是否启用">
+        <a-switch v-model:checked="formData.isActive" />
       </a-form-item>
 
       <a-button

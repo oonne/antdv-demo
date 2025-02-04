@@ -6,7 +6,7 @@
   /* 尺寸 */
   --header-height: 48px;
   --app-view-margin: 4px;
-  --app-view-padding: 16px;
+  --app-view-padding: 24px;
 }
 
 /* 
@@ -17,7 +17,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 
 /* 
