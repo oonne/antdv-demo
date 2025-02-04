@@ -45,6 +45,7 @@
 
       <a-button
         type="primary"
+        :loading="loading"
         @click="onSubmit"
       >
         保存
@@ -56,13 +57,13 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { message } from 'ant-design-vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { staffApi } from '@/api/index';
 import { to, buildErrorMsg } from '@/utils/index';
 import type { IStaff } from '@/types/staff';
 
 const route = useRoute();
-
+const router = useRouter();
 /* 表单 */
 const formRef = ref();
 const formData = ref<IStaff>({
@@ -93,13 +94,32 @@ onMounted(async () => {
 });
 
 /* 提交 */
+const loading = ref(false);
 const onSubmit = async () => {
+  if (loading.value) {
+    return;
+  }
+
   const [validateErr] = await to(formRef.value?.validate());
   if (validateErr) {
     return;
   }
 
-  console.log(formData.value);
+  loading.value = true;
+  const [err] = await to(
+    formData.value.staffId
+      ? staffApi.editStaff(formData.value)
+      : staffApi.addStaff(formData.value),
+  );
+  loading.value = false;
+
+  if (err) {
+    message.error(buildErrorMsg({ err, defaultMsg: '提交失败' }));
+    return;
+  }
+
+  message.success('提交成功');
+  router.back();
 };
 </script>
 

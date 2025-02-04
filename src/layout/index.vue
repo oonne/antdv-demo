@@ -48,7 +48,7 @@ watch(collapsed, (value) => {
 
 .header {
   background-color: #fff;
-  padding: 0 24px;
+  padding: 0 calc(var(--app-view-padding) + var(--app-view-margin));
   height: var(--header-height);
   line-height: var(--header-height);
 }

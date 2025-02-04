@@ -48,6 +48,11 @@ const buildErrorMsg = (props: IProps): string => {
     return t(`${err.code}`);
   }
 
+  // 有message，则返回message
+  if (err.message) {
+    return err.message;
+  }
+
   // 缺省错误
   return defaultMsg || t('msg_error');
 };
