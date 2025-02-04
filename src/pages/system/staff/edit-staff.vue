@@ -1,17 +1,26 @@
 <template>
   <div class="app-form">
     <a-form
+      ref="formRef"
       :model="formData"
       layout="vertical"
     >
-      <a-form-item label="账号名">
+      <a-form-item
+        label="账号名"
+        name="name"
+        :rules="[{ required: true }]"
+      >
         <a-input
           v-model:value="formData.name"
           placeholder="请输入账号名"
         />
       </a-form-item>
 
-      <a-form-item label="密码">
+      <a-form-item
+        label="密码"
+        name="name"
+        :rules="[{ required: !!formData.staffId }]"
+      >
         <a-input
           v-model:value="formData.password"
           placeholder="请输入密码"
@@ -29,7 +38,10 @@
         </a-select>
       </a-form-item>
 
-      <a-button type="primary">
+      <a-button
+        type="primary"
+        @click="onSubmit"
+      >
         保存
       </a-button>
     </a-form>
@@ -46,7 +58,8 @@ import type { IStaff } from '@/types/staff';
 
 const route = useRoute();
 
-/* 表单信息 */
+/* 表单 */
+const formRef = ref();
 const formData = ref<IStaff>({
   staffId: '',
   name: '',
@@ -73,6 +86,16 @@ const getDetail = async () => {
 onMounted(async () => {
   getDetail();
 });
+
+/* 提交 */
+const onSubmit = async () => {
+  const [validateErr] = await to(formRef.value?.validate());
+  if (validateErr) {
+    return;
+  }
+
+  console.log(formData.value);
+};
 </script>
 
 <style scoped></style>
