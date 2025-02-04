@@ -1,10 +1,39 @@
 <template>
-  <div>
-    编辑表单
+  <div class="app-form">
+    <a-form
+      :model="formData"
+      layout="vertical"
+    >
+      <a-form-item label="账号名">
+        <a-input
+          v-model:value="formData.name"
+          placeholder="请输入账号名"
+        />
+      </a-form-item>
+
+      <a-form-item label="密码">
+        <a-input
+          v-model:value="formData.password"
+          placeholder="请输入密码"
+        />
+      </a-form-item>
+
+      <a-form-item label="角色">
+        <a-select v-model:value="formData.role">
+          <a-select-option :value="1">
+            管理员
+          </a-select-option>
+          <a-select-option :value="2">
+            合伙人
+          </a-select-option>
+        </a-select>
+      </a-form-item>
+
+      <a-button type="primary">
+        保存
+      </a-button>
+    </a-form>
   </div>
-  <a-button type="primary">
-    保存
-  </a-button>
 </template>
 
 <script setup lang="ts">

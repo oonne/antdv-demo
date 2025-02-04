@@ -8,7 +8,7 @@ type AliasToken = Partial<typeof compactAlgorithm>;
 
 // 主题配置
 const themeToken: AliasToken = {
-  colorPrimary: '#6345b9',
+  colorPrimary: '#6157b3',
   fontSize: 12,
   borderRadius: 4,
   wireframe: false,

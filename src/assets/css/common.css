@@ -1,22 +1,30 @@
 /* 全局变量 */
 * {
   /* 颜色 */
-  --primary-color: #6345b9;
+  --primary-color: #1677ff;
 
   /* 尺寸 */
-  --header-height: 36px;
+  --header-height: 48px;
   --app-view-margin: 4px;
-  --app-view-padding: 12px;
+  --app-view-padding: 16px;
 }
 
 /* 
- * 每页内容顶部，用于放新增按钮和统计数据
+ * 列表
  */
+/* 每页内容顶部，用于放新增按钮和统计数据 */
 .app-view-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 8px;
+}
+
+/* 
+ * 表单
+ */
+.app-form {
+  max-width: 600px;
 }
 
 /* 
