@@ -26,15 +26,15 @@ export default {
   },
 
   // 编辑账号
-  editStaff(data: object) {
+  updateStaff(data: object) {
     return request({
-      url: '/staff/edit',
+      url: '/staff/update',
       data,
     });
   },
 
   // 删除账号
-  delStaff(data: object) {
+  deleteStaff(data: object) {
     return request({
       url: '/staff/delete',
       data,

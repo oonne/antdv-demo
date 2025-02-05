@@ -76,11 +76,11 @@ const formData = ref<IStaff>({
 
 /* 查询详情 */
 const getDetail = async () => {
-  if (!route.params.staffId) {
+  if (!route.query.staffId) {
     return;
   }
 
-  const [err, res] = await to(staffApi.getDetail({ staffId: route.params.staffId }));
+  const [err, res] = await to(staffApi.getDetail({ staffId: route.query.staffId }));
   if (err) {
     message.error(buildErrorMsg({ err, defaultMsg: '查询失败' }));
     return;
@@ -108,7 +108,7 @@ const onSubmit = async () => {
   loading.value = true;
   const [err] = await to(
     formData.value.staffId
-      ? staffApi.editStaff(formData.value)
+      ? staffApi.updateStaff(formData.value)
       : staffApi.addStaff(formData.value),
   );
   loading.value = false;
