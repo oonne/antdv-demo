@@ -2,6 +2,7 @@ import { ref } from 'vue';
 import { TableColumnType, PaginationProps } from 'ant-design-vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useBasicStore } from '@/store/index';
+import { ISorter } from '@/types/index';
 
 // eslint-disable-next-line no-unused-vars
 type Callback = () => Promise<void>;
@@ -37,9 +38,14 @@ const useTable = () => {
   });
 
   /*
+   * 排序
+   */
+  const sorter = ref<ISorter>({});
+
+  /*
    * 分页、排序、筛选变化时触发
    */
-  const changeTable = (paginationProps: PaginationProps, filters: any, sorter: any) => {
+  const changeTable = (paginationProps: PaginationProps, filters: any, sorterPorps: ISorter) => {
     // 分页
     pagination.value.current = paginationProps.current || 1;
     pagination.value.pageSize = paginationProps.pageSize || basicStore.pageSize;
@@ -48,33 +54,19 @@ const useTable = () => {
     console.log(filters);
 
     // 排序
-    console.log(sorter);
+    sorter.value = sorterPorps;
 
     // 获取数据
     getTableData();
-  };
 
-  /* 分页 */
-  const changePage = (current: number) => {
-    if (current) {
-      pagination.value.current = current;
-    }
-    getTableData();
-
+    // 存储分页数据
     router.replace({
       query: {
         ...route.query,
-        page: current,
+        page: paginationProps.current,
       },
     });
-  };
-
-  // /* 修改页数 */
-  const changePageSize = (size: number) => {
-    pagination.value.pageSize = size;
-    pagination.value.current = 1;
-    getTableData();
-    basicStore.setPageSize(size);
+    basicStore.setPageSize(pagination.value.pageSize);
   };
 
   /* 表格宽度拖拽 */
@@ -94,10 +86,9 @@ const useTable = () => {
 
     loading,
     pagination,
-    changeTable,
-    changePage,
-    changePageSize,
+    sorter,
 
+    changeTable,
     onResizeColumn,
     rowClassName,
   };

@@ -87,6 +87,7 @@ const columns = ref<TableColumnsType>([
   {
     title: '账号名',
     key: 'name',
+    sorter: true,
     resizable: true,
     width: 150,
     fixed: 'left',
@@ -94,12 +95,14 @@ const columns = ref<TableColumnsType>([
   {
     title: '是否启用',
     key: 'isActive',
+    sorter: true,
     resizable: true,
     width: 150,
   },
   {
     title: '更新时间',
     key: 'updatedAt',
+    sorter: true,
     resizable: true,
     width: 150,
   },

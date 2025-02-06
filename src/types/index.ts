@@ -33,3 +33,13 @@ export interface ILangMsg {
 export interface ILangMsgs {
   [key: string | number]: ILangMsg;
 }
+
+/*
+ * 表格
+ */
+// 排序
+export interface ISorter {
+  columnKey?: string;
+  order?: 'ascend' | 'descend';
+  [key: string]: any;
+}
