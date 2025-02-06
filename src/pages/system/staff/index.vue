@@ -121,6 +121,7 @@ const {
   loading,
   setGetDataFunction,
   pagination,
+  sorter,
   changeTable,
   onResizeColumn,
   rowClassName,
@@ -129,10 +130,15 @@ const {
 /* 查询列表 */
 const getList = async () => {
   loading.value = true;
-  const params = {
+  const params: any = {
     pageNo: pagination.value.current,
     pageSize: pagination.value.pageSize,
   };
+  if (sorter.value.columnKey) {
+    params.sortField = sorter.value.columnKey;
+    params.sortOrder = sorter.value.order === 'ascend' ? 'asc' : 'desc';
+  }
+
   const [err, res] = await to(staffApi.getList(params));
   loading.value = false;
 

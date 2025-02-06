@@ -29,17 +29,16 @@ const useTable = () => {
   const loading = ref(false);
 
   /*
-   * 分页
+   * 查询参数
    */
+  // 分页
   const pagination = ref({
     current: Number(route.query.page) || 1,
     pageSize: basicStore.pageSize,
     total: 0,
   });
 
-  /*
-   * 排序
-   */
+  // 排序
   const sorter = ref<ISorter>({});
 
   /*
