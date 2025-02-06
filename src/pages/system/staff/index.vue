@@ -36,6 +36,7 @@
         <a-switch
           v-model:checked="record.isActive"
           size="small"
+          @change="onChangeActive(record)"
         />
       </template>
 
@@ -149,6 +150,25 @@ setGetDataFunction(getList);
 onMounted(() => {
   getList();
 });
+
+/*
+ * 启用/禁用
+ */
+const onChangeActive = async (record: IStaff) => {
+  const [err] = await to(staffApi.updateStaff(record));
+  if (err) {
+    message.error(buildErrorMsg({ err, defaultMsg: '操作失败' }));
+    dataList.value = dataList.value.map((item) => {
+      if (item.staffId === record.staffId) {
+        return {
+          ...item,
+          isActive: !record.isActive,
+        };
+      }
+      return item;
+    });
+  }
+};
 
 /*
  * 删除
