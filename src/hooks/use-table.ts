@@ -40,7 +40,18 @@ const useTable = () => {
    * 分页、排序、筛选变化时触发
    */
   const changeTable = (paginationProps: PaginationProps, filters: any, sorter: any) => {
-    console.log(paginationProps, filters, sorter);
+    // 分页
+    pagination.value.current = paginationProps.current || 1;
+    pagination.value.pageSize = paginationProps.pageSize || basicStore.pageSize;
+
+    // 筛选
+    console.log(filters);
+
+    // 排序
+    console.log(sorter);
+
+    // 获取数据
+    getTableData();
   };
 
   /* 分页 */

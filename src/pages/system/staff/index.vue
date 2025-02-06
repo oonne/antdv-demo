@@ -10,7 +10,7 @@
     </a-space>
 
     <div class="app-view-header-sum">
-      总计: 2
+      总计: {{ pagination.total }}
     </div>
   </div>
 
@@ -21,6 +21,7 @@
     :loading="loading"
     row-key="id"
     :row-class-name="rowClassName"
+    :pagination="pagination"
     @resize-column="onResizeColumn"
     @change="changeTable"
   >
@@ -28,6 +29,14 @@
       <!-- 账号名 -->
       <template v-if="column.key === 'name'">
         {{ record.name || '-' }}
+      </template>
+
+      <!-- 是否启用 -->
+      <template v-if="column.key === 'isActive'">
+        <a-switch
+          v-model:checked="record.isActive"
+          size="small"
+        />
       </template>
 
       <!-- 更新时间 -->
@@ -82,6 +91,12 @@ const columns = ref<TableColumnsType>([
     fixed: 'left',
   },
   {
+    title: '是否启用',
+    key: 'isActive',
+    resizable: true,
+    width: 150,
+  },
+  {
     title: '更新时间',
     key: 'updatedAt',
     resizable: true,
@@ -99,7 +114,12 @@ const columns = ref<TableColumnsType>([
 /* 列表 */
 const dataList = ref<IStaff[]>([]);
 const {
-  loading, setGetDataFunction, pagination, changeTable, onResizeColumn, rowClassName,
+  loading,
+  setGetDataFunction,
+  pagination,
+  changeTable,
+  onResizeColumn,
+  rowClassName,
 } = useTable();
 
 /* 查询列表 */

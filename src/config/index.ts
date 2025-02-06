@@ -10,5 +10,5 @@ export default {
   uploadTimeOut: 60000,
 
   // 分页大小
-  pageSize: 2,
+  pageSize: 10,
 };
