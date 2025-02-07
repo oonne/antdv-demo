@@ -59,11 +59,13 @@ import { ref, onMounted } from 'vue';
 import { message } from 'ant-design-vue';
 import { useRoute, useRouter } from 'vue-router';
 import { staffApi } from '@/api/index';
-import { to, buildErrorMsg } from '@/utils/index';
+import { to, buildErrorMsg, Utils } from '@/utils/index';
 import type { IStaff } from '@/types/staff';
 
 const route = useRoute();
 const router = useRouter();
+const { createHash } = Utils;
+
 /* 表单 */
 const formRef = ref();
 const formData = ref<IStaff>({
@@ -105,11 +107,19 @@ const onSubmit = async () => {
     return;
   }
 
+  // 密码需要哈希
+  const params = {
+    ...formData.value,
+  };
+  if (params.password) {
+    params.password = createHash(params.password, 32);
+  }
+
   loading.value = true;
   const [err] = await to(
     formData.value.staffId
-      ? staffApi.updateStaff(formData.value)
-      : staffApi.addStaff(formData.value),
+      ? staffApi.updateStaff(params)
+      : staffApi.addStaff(params),
   );
   loading.value = false;
 
