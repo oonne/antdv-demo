@@ -37,6 +37,11 @@ export interface ILangMsgs {
 /*
  * 表格
  */
+// 筛选
+export interface IFilter {
+  [key: string]: any;
+}
+
 // 排序
 export interface ISorter {
   columnKey?: string;

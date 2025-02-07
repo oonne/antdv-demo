@@ -20,6 +20,12 @@
   margin-bottom: 12px;
 }
 
+/* 表格自定义筛选 */
+.table-filter-dropdown {
+  padding: 8px;
+  border-radius: 4px;
+}
+
 /* 
  * 表单
  */

@@ -25,6 +25,23 @@
     @resize-column="onResizeColumn"
     @change="changeTable"
   >
+    <!-- 搜索 -->
+    <!-- <template
+      #customFilterDropdown="{
+        setSelectedKeys,
+        selectedKeys,
+        confirm,
+        clearFilters,
+        column }"
+    >
+      <div class="table-filter-dropdown">
+        <a-input-search
+          placeholder="搜索"
+          @search="getList"
+        />
+      </div>
+    </template> -->
+
     <template #bodyCell="{ column, record, index }">
       <!-- 序号 -->
       <template v-if="column.key === 'index'">
@@ -99,6 +116,7 @@ const columns = ref<TableColumnsType>([
     title: '账号名',
     key: 'name',
     sorter: true,
+    customFilterDropdown: true,
     resizable: true,
     width: 150,
   },
@@ -106,6 +124,17 @@ const columns = ref<TableColumnsType>([
     title: '是否启用',
     key: 'isActive',
     sorter: true,
+    filters: [
+      {
+        text: '启用',
+        value: true,
+      },
+      {
+        text: '禁用',
+        value: false,
+      },
+    ],
+    filterMultiple: false,
     resizable: true,
     width: 150,
   },
@@ -131,6 +160,7 @@ const {
   loading,
   setGetDataFunction,
   pagination,
+  filters,
   sorter,
   changeTable,
   onResizeColumn,
@@ -144,6 +174,12 @@ const getList = async () => {
     pageNo: pagination.value.current,
     pageSize: pagination.value.pageSize,
   };
+  if (filters.value.name) {
+    params.name = filters.value.name;
+  }
+  if (filters.value.isActive?.length === 1) {
+    [params.isActive] = filters.value.isActive;
+  }
   if (sorter.value.columnKey) {
     params.sortField = sorter.value.columnKey;
     params.sortOrder = sorter.value.order === 'ascend' ? 'asc' : 'desc';

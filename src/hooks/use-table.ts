@@ -2,7 +2,7 @@ import { ref } from 'vue';
 import { TableColumnType, PaginationProps } from 'ant-design-vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useBasicStore } from '@/store/index';
-import { ISorter } from '@/types/index';
+import { ISorter, IFilter } from '@/types/index';
 
 // eslint-disable-next-line no-unused-vars
 type Callback = () => Promise<void>;
@@ -38,19 +38,26 @@ const useTable = () => {
     total: 0,
   });
 
+  // 筛选
+  const filters = ref<IFilter>({});
+
   // 排序
   const sorter = ref<ISorter>({});
 
   /*
    * 分页、排序、筛选变化时触发
    */
-  const changeTable = (paginationProps: PaginationProps, filters: any, sorterPorps: ISorter) => {
+  const changeTable = (
+    paginationProps: PaginationProps,
+    filtersPorps: IFilter,
+    sorterPorps: ISorter,
+  ) => {
     // 分页
     pagination.value.current = paginationProps.current || 1;
     pagination.value.pageSize = paginationProps.pageSize || basicStore.pageSize;
 
     // 筛选
-    console.log(filters);
+    filters.value = filtersPorps;
 
     // 排序
     sorter.value = sorterPorps;
@@ -85,6 +92,7 @@ const useTable = () => {
 
     loading,
     pagination,
+    filters,
     sorter,
 
     changeTable,
