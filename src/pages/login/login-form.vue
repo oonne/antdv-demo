@@ -40,15 +40,32 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import { message } from 'ant-design-vue';
+import { authApi } from '@/api/index';
+import { to, buildErrorMsg } from '@/utils/index';
 
+const loading = ref(false);
 const formState = ref({
   name: '',
   password: '',
 });
 
-const onLogin = () => {
-  console.log('提交的表单数据:', formState);
-  // 这里添加登录请求逻辑
+const onLogin = async () => {
+  if (loading.value) {
+    return;
+  }
+
+  loading.value = true;
+  const [err, res] = await to(authApi.login(formState.value));
+  loading.value = false;
+
+  if (err) {
+    message.error(buildErrorMsg({ err, defaultMsg: '登录失败' }));
+    return;
+  }
+
+  message.success('登录成功');
+  console.log(res);
 };
 </script>
 
