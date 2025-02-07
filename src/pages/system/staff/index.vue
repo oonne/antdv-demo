@@ -25,22 +25,38 @@
     @resize-column="onResizeColumn"
     @change="changeTable"
   >
-    <!-- 搜索 -->
-    <!-- <template
+    <template
       #customFilterDropdown="{
         setSelectedKeys,
         selectedKeys,
         confirm,
-        clearFilters,
-        column }"
+        column
+      }"
     >
       <div class="table-filter-dropdown">
-        <a-input-search
-          placeholder="搜索"
-          @search="getList"
-        />
+        <!-- 搜索账号名 -->
+        <template v-if="column.key === 'name'">
+          <a-input-search
+            ref="searchInput"
+            :value="selectedKeys[0]"
+            size="small"
+            allow-clear
+            @change="(e: any) => setSelectedKeys(e.target.value ? [e.target.value] : [])"
+            @search="confirm"
+          />
+        </template>
       </div>
-    </template> -->
+    </template>
+
+    <!-- 显示当前的搜索条件 -->
+    <template #headerCell="{ column }">
+      <template v-if="column.key === 'name' && filters.name">
+        账号名({{ filters.name[0] }})
+      </template>
+      <template v-else-if="column.key === 'isActive' && filters.isActive">
+        是否启用({{ filters.isActive[0] === true ? '启用' : '禁用' }})
+      </template>
+    </template>
 
     <template #bodyCell="{ column, record, index }">
       <!-- 序号 -->
@@ -175,7 +191,7 @@ const getList = async () => {
     pageSize: pagination.value.pageSize,
   };
   if (filters.value.name) {
-    params.name = filters.value.name;
+    [params.name] = filters.value.name;
   }
   if (filters.value.isActive?.length === 1) {
     [params.isActive] = filters.value.isActive;
