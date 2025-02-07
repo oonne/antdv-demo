@@ -25,7 +25,12 @@
     @resize-column="onResizeColumn"
     @change="changeTable"
   >
-    <template #bodyCell="{ column, record }">
+    <template #bodyCell="{ column, record, index }">
+      <!-- 序号 -->
+      <template v-if="column.key === 'index'">
+        {{ index + 1 }}
+      </template>
+
       <!-- 账号名 -->
       <template v-if="column.key === 'name'">
         {{ record.name || '-' }}
@@ -85,12 +90,17 @@ const { confirmModal } = Feedback;
  */
 const columns = ref<TableColumnsType>([
   {
+    title: '#',
+    key: 'index',
+    width: 50,
+    fixed: 'left',
+  },
+  {
     title: '账号名',
     key: 'name',
     sorter: true,
     resizable: true,
     width: 150,
-    fixed: 'left',
   },
   {
     title: '是否启用',
