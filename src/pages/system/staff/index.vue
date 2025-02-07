@@ -78,6 +78,12 @@
         />
       </template>
 
+      <!-- 角色 -->
+      <template v-if="column.key === 'role'">
+        <span v-if="record.role === 1">管理员</span>
+        <span v-if="record.role === 2">合伙人</span>
+      </template>
+
       <!-- 更新时间 -->
       <template v-if="column.key === 'updatedAt'">
         {{ dayjs(record.updatedAt).format('YYYY-MM-DD HH:mm:ss') || '-' }}
@@ -155,6 +161,23 @@ const columns = ref<TableColumnsType>([
     width: 150,
   },
   {
+    title: '角色',
+    key: 'role',
+    sorter: true,
+    filters: [
+      {
+        text: '管理员',
+        value: 1,
+      },
+      {
+        text: '合伙人',
+        value: 2,
+      },
+    ],
+    resizable: true,
+    width: 150,
+  },
+  {
     title: '更新时间',
     key: 'updatedAt',
     sorter: true,
@@ -195,6 +218,9 @@ const getList = async () => {
   }
   if (filters.value.isActive?.length === 1) {
     [params.isActive] = filters.value.isActive;
+  }
+  if (filters.value.role?.length > 0) {
+    params.role = filters.value.role;
   }
   if (sorter.value.columnKey) {
     params.sortField = sorter.value.columnKey;

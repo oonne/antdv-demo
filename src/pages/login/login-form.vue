@@ -2,6 +2,7 @@
   <div class="login-page">
     <div class="login-container">
       <a-form
+        ref="formRef"
         :model="formState"
         name="login"
         @finish="onLogin"
@@ -42,21 +43,38 @@
 import { ref } from 'vue';
 import { message } from 'ant-design-vue';
 import { authApi } from '@/api/index';
-import { to, buildErrorMsg } from '@/utils/index';
+import { to, buildErrorMsg, Utils } from '@/utils/index';
 
-const loading = ref(false);
+const { createHash } = Utils;
+
+/*
+ * 表单
+ */
+const formRef = ref();
 const formState = ref({
   name: '',
   password: '',
 });
 
+/*
+ * 登录
+ */
+const loading = ref(false);
 const onLogin = async () => {
   if (loading.value) {
     return;
   }
 
+  const [validateErr] = await to(formRef.value?.validate());
+  if (validateErr) {
+    return;
+  }
+
   loading.value = true;
-  const [err, res] = await to(authApi.login(formState.value));
+  const [err, res] = await to(authApi.login({
+    name: formState.value.name,
+    password: createHash(formState.value.password, 32),
+  }));
   loading.value = false;
 
   if (err) {
