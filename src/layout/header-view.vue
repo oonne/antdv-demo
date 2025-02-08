@@ -15,7 +15,7 @@
     >
       <!-- 头像和在线状态 -->
       <div class="user">
-        用户名TODO
+        {{ staffInfo.name }}
         <span class="arrow-down" />
       </div>
 
@@ -34,12 +34,16 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { message } from 'ant-design-vue';
+import { storeToRefs } from 'pinia';
 import { useRoute, useRouter, RouteLocationNormalizedLoaded } from 'vue-router';
+import { useStaffStore } from '@/store/index';
 import { Type, Feedback } from '@/utils/index';
 import useEventOn from '@/hooks/use-event-on';
 
 const { isString } = Type;
 const { confirmModal } = Feedback;
+const staffStore = useStaffStore();
+const { staffInfo } = storeToRefs(staffStore);
 
 /*
  * 设置Title
@@ -74,14 +78,12 @@ const logout = async () => {
     return;
   }
 
-  message.success('已退出登录');
-  // TODO: 退出登录
-  // userStore.clear();
+  staffStore.clear();
   router.replace({
     name: 'login',
   });
 
-  console.log('退出登录');
+  message.success('已退出登录');
 };
 </script>
 

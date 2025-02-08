@@ -85,8 +85,8 @@ const onLogin = async () => {
     return;
   }
 
-  // 如果账号名和密码都是 admin，则初始化系统
-  if (formState.value.name === 'admin' && formState.value.password === 'admin') {
+  // 如果账号名和密码都是 init，则初始化系统
+  if (formState.value.name === 'init' && formState.value.password === 'init') {
     await initSystem();
     return;
   }

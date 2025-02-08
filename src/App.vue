@@ -17,7 +17,7 @@
 <script setup lang="ts">
 import { onBeforeMount } from 'vue';
 import { storeToRefs } from 'pinia';
-import { useLocaleStore } from '@/store/index';
+import { useLocaleStore, useStaffStore } from '@/store/index';
 import { themeToken } from '@/config/theme-token';
 
 const localeStore = useLocaleStore();
@@ -27,6 +27,11 @@ const { locale, antLocale } = storeToRefs(localeStore);
  * 初始化
  */
 const init = () => {
+  // UUID
+  const staffStore = useStaffStore();
+  staffStore.initUUID();
+
+  // 语言
   localeStore.initLocale();
 };
 

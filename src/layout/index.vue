@@ -25,7 +25,8 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from 'vue';
+import { ref, watch, onBeforeMount } from 'vue';
+import { useStaffStore } from '@/store/index';
 import AppView from './app-view.vue';
 import HeaderView from './header-view.vue';
 import SideView from './side-view.vue';
@@ -39,6 +40,18 @@ watch(collapsed, (value) => {
   localStorage.setItem('SIDE_COLLAPSED', value.toString());
 });
 
+/*
+ * 初始化
+ */
+const init = () => {
+  const staffStore = useStaffStore();
+  staffStore.getStaffInfo();
+};
+
+/* 进入页面时初始化 */
+onBeforeMount(() => {
+  init();
+});
 </script>
 
 <style scoped>
