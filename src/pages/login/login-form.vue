@@ -55,11 +55,26 @@ const formState = ref({
   name: '',
   password: '',
 });
+const loading = ref(false);
+
+/*
+ * 初始化
+ */
+const initSystem = async () => {
+  loading.value = true;
+  const [err] = await to(authApi.init());
+  loading.value = false;
+  if (err) {
+    message.error(buildErrorMsg({ err, defaultMsg: '初始化失败' }));
+    return;
+  }
+
+  message.success('初始化成功');
+};
 
 /*
  * 登录
  */
-const loading = ref(false);
 const onLogin = async () => {
   if (loading.value) {
     return;
@@ -70,6 +85,13 @@ const onLogin = async () => {
     return;
   }
 
+  // 如果账号名和密码都是 admin，则初始化系统
+  if (formState.value.name === 'admin' && formState.value.password === 'admin') {
+    await initSystem();
+    return;
+  }
+
+  // 登录逻辑
   loading.value = true;
   const [err, res] = await to(authApi.login({
     name: formState.value.name,
