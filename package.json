@@ -28,6 +28,7 @@
     "eventbus-typescript": "^1.0.3",
     "lint-staged": "^15.2.5",
     "pinia": "^2.2.2",
+    "scrypt-js": "^3.0.1",
     "vite": "^5.2.13",
     "vite-svg-loader": "^5.1.0",
     "vue": "^3.5.9",
