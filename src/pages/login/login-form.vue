@@ -112,6 +112,7 @@ const onLogin = async () => {
   localStorage.setItem('TOKEN', token);
   localStorage.setItem('REFRESH_TOKEN', refreshToken);
   staffStore.setStaffInfo(staff);
+  staffStore.setTokenRefreshTime();
 
   message.success('登录成功');
   router.replace({

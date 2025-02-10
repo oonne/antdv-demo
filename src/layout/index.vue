@@ -47,6 +47,7 @@ watch(collapsed, (value) => {
 const init = () => {
   const staffStore = useStaffStore();
   staffStore.getStaffInfo();
+  staffStore.refreshToken();
 };
 
 /* 进入页面时初始化 */

@@ -17,9 +17,10 @@ export default {
   },
 
   // 换票
-  refreshToken() {
+  refreshToken(data: object) {
     return request({
       url: '/auth/refresh-token',
+      data,
     });
   },
 };

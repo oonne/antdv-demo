@@ -10,7 +10,7 @@ export default {
   uploadTimeOut: 60000,
 
   // token刷新时间
-  tokenRefreshTime: 1000 * 60 * 12,
+  tokenRefreshTime: 1000 * 60 * 60 * 12,
 
   // 分页大小
   pageSize: 10,

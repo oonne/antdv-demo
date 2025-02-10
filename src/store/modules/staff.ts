@@ -65,7 +65,7 @@ export default defineStore('staff', () => {
   const refreshToken = async () => {
     const refreshTokenValue = localStorage.getItem('REFRESH_TOKEN');
     const tokenRefreshTime = localStorage.getItem('TOKEN_REFRESH_TIME');
-    if (!refreshTokenValue || !tokenRefreshTime) {
+    if (!refreshTokenValue || !tokenRefreshTime || !staffInfo.value.staffId) {
       return;
     }
 
@@ -74,12 +74,17 @@ export default defineStore('staff', () => {
       return;
     }
 
-    const [err, res] = await to(authApi.refreshToken());
+    const [err, res] = await to(authApi.refreshToken({
+      staffId: staffInfo.value.staffId,
+      refreshToken: refreshTokenValue,
+    }));
     if (err) {
       return;
     }
 
-    console.log(res);
+    localStorage.setItem('TOKEN', res.data.token);
+    localStorage.setItem('REFRESH_TOKEN', res.data.refreshToken);
+    setTokenRefreshTime();
   };
 
   /*
