@@ -54,7 +54,6 @@ const pages: RouteRecordRaw[] = [
         component: () => import('@/pages/home/index.vue'),
         name: 'home',
         meta: {
-          noNeedLogin: true,
           sideKey: 'home',
           title: '首页',
         },
@@ -75,7 +74,6 @@ const pages: RouteRecordRaw[] = [
         component: () => import('@/pages/system/staff/index.vue'),
         name: 'staff',
         meta: {
-          noNeedLogin: true,
           sideKey: 'staff',
           title: '账号管理',
         },
@@ -86,7 +84,6 @@ const pages: RouteRecordRaw[] = [
         component: () => import('@/pages/system/staff/edit-staff.vue'),
         name: 'edit-staff',
         meta: {
-          noNeedLogin: true,
           sideKey: 'staff',
           title: '编辑成员',
         },
@@ -97,7 +94,6 @@ const pages: RouteRecordRaw[] = [
         component: () => import('@/pages/system/recycle/index.vue'),
         name: 'recycle',
         meta: {
-          noNeedLogin: true,
           sideKey: 'recycle',
           title: '回收站',
         },
@@ -118,9 +114,16 @@ const pages: RouteRecordRaw[] = [
         component: () => import('@/pages/blog/blog-list/index.vue'),
         name: 'blog-list',
         meta: {
-          noNeedLogin: true,
           sideKey: 'blog-list',
           title: '博客列表',
+        },
+      },
+      // 资源管理
+      {
+        path: 'assets-list',
+        component: () => import('@/pages/blog/assets-list/index.vue'),
+        name: 'assets-list',
+        meta: {
         },
       },
       // 关于我
@@ -129,7 +132,6 @@ const pages: RouteRecordRaw[] = [
         component: () => import('@/pages/blog/about-me/index.vue'),
         name: 'about-me',
         meta: {
-          noNeedLogin: true,
           sideKey: 'about-me',
           title: '关于我',
         },
