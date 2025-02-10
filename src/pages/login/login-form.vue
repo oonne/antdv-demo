@@ -31,6 +31,7 @@
           type="primary"
           html-type="submit"
           class="login-button"
+          :loading="loading"
         >
           登录
         </a-button>
@@ -43,11 +44,13 @@
 import { ref } from 'vue';
 import { message } from 'ant-design-vue';
 import { useRouter } from 'vue-router';
+import CryptoJS from 'crypto-js';
 import { authApi } from '@/api/index';
+import config from '@/config/index';
 import { useStaffStore } from '@/store/index';
 import { to, buildErrorMsg, Utils } from '@/utils/index';
 
-const { createHash } = Utils;
+const { createHash, randomChars } = Utils;
 const staffStore = useStaffStore();
 const router = useRouter();
 
@@ -77,6 +80,32 @@ const initSystem = async () => {
 };
 
 /*
+ * 计算登录pow
+ */
+const calcLoginPow = async (name: string) => {
+  const [err, res] = await to(authApi.getLoginPow({
+    name,
+  }));
+  if (err) {
+    return '';
+  }
+
+  const { salt, result } = res.data;
+  let powKey = '';
+
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
+    powKey = randomChars(32);
+    const hash = CryptoJS.SHA512(powKey + salt).toString();
+
+    if (hash.slice(-config.loginPowLength) === result.slice(-config.loginPowLength)) {
+      break;
+    }
+  }
+  return powKey;
+};
+
+/*
  * 登录
  */
 const onLogin = async () => {
@@ -97,7 +126,18 @@ const onLogin = async () => {
 
   // 登录逻辑
   loading.value = true;
+  console.time('pow耗时');
+  const powKey = await calcLoginPow(formState.value.name);
+  console.timeEnd('pow耗时');
+
+  if (!powKey) {
+    loading.value = false;
+    message.error(buildErrorMsg({ err: '登录失败', defaultMsg: '登录失败' }));
+    return;
+  }
+
   const [err, res] = await to(authApi.login({
+    powKey,
     name: formState.value.name,
     password: createHash(formState.value.password, 32),
   }));
