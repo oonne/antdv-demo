@@ -53,7 +53,7 @@
       <template v-if="column.key === 'name' && filters.name">
         账号名({{ filters.name[0] }})
       </template>
-      <template v-else-if="column.key === 'isActive' && filters.isActive">
+      <template v-if="column.key === 'isActive' && filters.isActive">
         是否启用({{ filters.isActive[0] === true ? '启用' : '禁用' }})
       </template>
     </template>
