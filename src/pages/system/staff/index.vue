@@ -102,6 +102,7 @@
           size="small"
           type="link"
           danger
+          :disabled="record.staffId === staffInfo.staffId"
           @click="onDelete(record)"
         >
           删除
@@ -114,15 +115,19 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import { storeToRefs } from 'pinia';
 import { message, TableColumnsType } from 'ant-design-vue';
 import dayjs from 'dayjs';
 import useTable from '@/hooks/use-table';
+import { useStaffStore } from '@/store/index';
 import { staffApi } from '@/api/index';
 import { to, buildErrorMsg, Feedback } from '@/utils/index';
 import type { IStaff } from '@/types/staff';
 
 const router = useRouter();
 const { confirmModal } = Feedback;
+const staffStore = useStaffStore();
+const { staffInfo } = storeToRefs(staffStore);
 
 /*
  * 列表项
@@ -252,6 +257,20 @@ onMounted(() => {
  * 启用/禁用
  */
 const onChangeActive = async (record: IStaff) => {
+  if (record.staffId === staffInfo.value.staffId) {
+    message.error('不能操作当前账号');
+    dataList.value = dataList.value.map((item) => {
+      if (item.staffId === record.staffId) {
+        return {
+          ...item,
+          isActive: !record.isActive,
+        };
+      }
+      return item;
+    });
+    return;
+  }
+
   const [err] = await to(staffApi.updateStaff(record));
   if (err) {
     message.error(buildErrorMsg({ err, defaultMsg: '操作失败' }));

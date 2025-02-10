@@ -59,12 +59,14 @@ import { ref, onMounted } from 'vue';
 import { message } from 'ant-design-vue';
 import { useRoute, useRouter } from 'vue-router';
 import { staffApi } from '@/api/index';
+import { useStaffStore } from '@/store/index';
 import { to, buildErrorMsg, Utils } from '@/utils/index';
 import type { IStaff } from '@/types/staff';
 
 const route = useRoute();
 const router = useRouter();
 const { createHash } = Utils;
+const staffStore = useStaffStore();
 
 /* 表单 */
 const formRef = ref();
@@ -113,6 +115,11 @@ const onSubmit = async () => {
   };
   if (params.password) {
     params.password = createHash(params.password, 32);
+  }
+
+  // 如果是当前账号，则isActive必须是true
+  if (formData.value.staffId === staffStore.staffInfo.staffId) {
+    params.isActive = true;
   }
 
   loading.value = true;
