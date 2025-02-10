@@ -27,6 +27,7 @@
 <script lang="ts" setup>
 import { ref, watch, onBeforeMount } from 'vue';
 import { useStaffStore } from '@/store/index';
+import useInterval from '@/hooks/use-interval';
 import AppView from './app-view.vue';
 import HeaderView from './header-view.vue';
 import SideView from './side-view.vue';
@@ -52,6 +53,12 @@ const init = () => {
 onBeforeMount(() => {
   init();
 });
+
+/* 定期刷新token */
+useInterval(() => {
+  const staffStore = useStaffStore();
+  staffStore.refreshToken();
+}, 60 * 60 * 1000);
 </script>
 
 <style scoped>

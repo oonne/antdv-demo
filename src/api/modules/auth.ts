@@ -15,4 +15,11 @@ export default {
       data,
     });
   },
+
+  // 换票
+  refreshToken() {
+    return request({
+      url: '/auth/refresh-token',
+    });
+  },
 };

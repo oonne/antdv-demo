@@ -1,6 +1,8 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
-import { Utils } from '@/utils/index';
+import config from '@/config/index';
+import { authApi } from '@/api/index';
+import { to, Utils } from '@/utils/index';
 import type { IStaff } from '@/types/staff';
 
 const { randomChars } = Utils;
@@ -52,6 +54,35 @@ export default defineStore('staff', () => {
   };
 
   /*
+   * 刷新token
+   */
+  // 记录token刷新时间
+  const setTokenRefreshTime = () => {
+    localStorage.setItem('TOKEN_REFRESH_TIME', new Date().getTime().toString());
+  };
+
+  // 刷新token
+  const refreshToken = async () => {
+    const refreshTokenValue = localStorage.getItem('REFRESH_TOKEN');
+    const tokenRefreshTime = localStorage.getItem('TOKEN_REFRESH_TIME');
+    if (!refreshTokenValue || !tokenRefreshTime) {
+      return;
+    }
+
+    // 如果最近一次刷新时间在 config.tokenRefreshTime 分钟内，则不刷新
+    if (new Date().getTime() - parseInt(tokenRefreshTime, 10) < config.tokenRefreshTime) {
+      return;
+    }
+
+    const [err, res] = await to(authApi.refreshToken());
+    if (err) {
+      return;
+    }
+
+    console.log(res);
+  };
+
+  /*
    * 清空所有信息
    * （退出登录的时候调用）
    */
@@ -73,6 +104,10 @@ export default defineStore('staff', () => {
     staffInfo,
     setStaffInfo,
     getStaffInfo,
+
+    setTokenRefreshTime,
+    refreshToken,
+
     clear,
   };
 });

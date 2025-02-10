@@ -42,10 +42,14 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { message } from 'ant-design-vue';
+import { useRouter } from 'vue-router';
 import { authApi } from '@/api/index';
+import { useStaffStore } from '@/store/index';
 import { to, buildErrorMsg, Utils } from '@/utils/index';
 
 const { createHash } = Utils;
+const staffStore = useStaffStore();
+const router = useRouter();
 
 /*
  * 表单
@@ -104,8 +108,15 @@ const onLogin = async () => {
     return;
   }
 
+  const { staff, token, refreshToken } = res.data;
+  localStorage.setItem('TOKEN', token);
+  localStorage.setItem('REFRESH_TOKEN', refreshToken);
+  staffStore.setStaffInfo(staff);
+
   message.success('登录成功');
-  console.log(res);
+  router.replace({
+    name: 'home',
+  });
 };
 </script>
 
