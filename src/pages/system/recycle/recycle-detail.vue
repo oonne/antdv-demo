@@ -1,6 +1,6 @@
 <template>
   <div>
-    内容TODO
+    <Loading />
   </div>
 </template>
 
@@ -10,6 +10,7 @@ import { message } from 'ant-design-vue';
 import { useRoute } from 'vue-router';
 import { recycleApi } from '@/api/index';
 import { to, buildErrorMsg } from '@/utils/index';
+import Loading from '@/components/loading/index.vue';
 import type { IRecycle } from '@/types/recycle';
 
 const route = useRoute();
