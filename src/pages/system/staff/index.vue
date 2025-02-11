@@ -37,7 +37,6 @@
         <!-- 搜索账号名 -->
         <template v-if="column.key === 'name'">
           <a-input-search
-            ref="searchInput"
             :value="selectedKeys[0]"
             size="small"
             allow-clear

@@ -29,7 +29,6 @@
         <!-- 搜索内容、删除者 -->
         <template v-if="column.key === 'content' || column.key === 'deleteStaffName'">
           <a-input-search
-            ref="searchInput"
             :value="selectedKeys[0]"
             size="small"
             allow-clear
@@ -66,7 +65,7 @@
 
       <!-- 内容 -->
       <template v-if="column.key === 'content'">
-        {{ record.content || '-' }}
+        <TextContent :content="record.content" />
       </template>
 
       <!-- 删除者 -->
@@ -101,6 +100,7 @@ import dayjs from 'dayjs';
 import useTable from '@/hooks/use-table';
 import { recycleApi } from '@/api/index';
 import { to, buildErrorMsg, Feedback } from '@/utils/index';
+import TextContent from '@/components/text-content/index';
 import type { IRecycle } from '@/types/recycle';
 
 const { confirmModal } = Feedback;
@@ -126,7 +126,7 @@ const columns = ref<TableColumnsType>([
       },
     ],
     resizable: true,
-    width: 150,
+    width: 100,
   },
   {
     title: '内容',
@@ -134,7 +134,7 @@ const columns = ref<TableColumnsType>([
     sorter: true,
     customFilterDropdown: true,
     resizable: true,
-    width: 250,
+    width: 300,
   },
   {
     title: '删除者',
@@ -142,7 +142,7 @@ const columns = ref<TableColumnsType>([
     sorter: true,
     customFilterDropdown: true,
     resizable: true,
-    width: 150,
+    width: 100,
   },
   {
     title: '删除时间',
@@ -182,6 +182,9 @@ const getList = async () => {
   };
   if (filters.value.content) {
     [params.content] = filters.value.content;
+  }
+  if (filters.value.deleteStaffName) {
+    [params.deleteStaffName] = filters.value.deleteStaffName;
   }
   if (filters.value.type?.length > 0) {
     params.type = filters.value.type;
@@ -225,7 +228,7 @@ const onDelete = async (record: IRecycle) => {
     return;
   }
 
-  const [err] = await to(recycleApi.deleteRecycle({ id: record.id }));
+  const [err] = await to(recycleApi.deleteRecycle({ recycleId: record.recycleId }));
   if (err) {
     message.error(buildErrorMsg({ err, defaultMsg: '删除失败' }));
     return;
