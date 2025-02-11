@@ -1,7 +1,7 @@
 /*
  * 侧边栏配置
  */
-interface ISideConfig {
+export interface ISideConfig {
   key: string;
   title: string; // 标题
   icon?: string; // 图标
@@ -26,6 +26,7 @@ const sideMenu: ISideConfig[] = [
       {
         key: 'staff',
         title: '账号管理',
+        roles: [1],
       },
       {
         key: 'recycle',
@@ -39,6 +40,7 @@ const sideMenu: ISideConfig[] = [
     key: 'blog',
     title: '博客',
     icon: 'blog',
+    roles: [1],
     children: [
       {
         key: 'blog-list',

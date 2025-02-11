@@ -77,12 +77,14 @@ import {
   ref, watch, computed, onMounted,
 } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import SideMenuConfig from '@/config/side-menu';
+import { useStaffStore } from '@/store/index';
+import SideMenuConfig, { ISideConfig } from '@/config/side-menu';
 import Icon from '@/components/icon-svg/index.vue';
 import AuraImg from '@/assets/img/aura.png';
 
 const route = useRoute();
 const router = useRouter();
+const staffStore = useStaffStore();
 
 const props = defineProps<{
   collapsed: boolean
@@ -93,9 +95,36 @@ defineEmits(['update:collapsed']);
  * 筛选出显示的菜单
  */
 const sideMenuList = computed(() => {
-  console.log('TODO: 根据角色显示菜单');
+  const userRole = staffStore.staffInfo.role || 0;
 
-  return SideMenuConfig;
+  const filterMenuByRole = (menuList: ISideConfig[]): ISideConfig[] => {
+    const result: ISideConfig[] = [];
+
+    menuList.forEach((menu) => {
+      const hasPermission = !menu.roles || menu.roles.includes(userRole);
+
+      if (!hasPermission) {
+        return;
+      }
+
+      if (!menu.children) {
+        result.push(menu);
+        return;
+      }
+
+      const filteredChildren = filterMenuByRole(menu.children);
+      if (filteredChildren.length) {
+        result.push({
+          ...menu,
+          children: filteredChildren,
+        });
+      }
+    });
+
+    return result;
+  };
+
+  return filterMenuByRole(SideMenuConfig);
 });
 
 /*
