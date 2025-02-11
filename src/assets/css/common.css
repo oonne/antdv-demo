@@ -34,6 +34,13 @@
 }
 
 /* 
+ * 详情
+ */
+.app-detail-loading {
+  margin: 30px auto;
+}
+
+/* 
  * 常用样式
  */
 .none {

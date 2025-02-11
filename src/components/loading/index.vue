@@ -1,13 +1,33 @@
 <template>
-  <div class="loading-spinner" />
+  <div
+    class="loading-spinner"
+    :style="spinnerStyle"
+  />
 </template>
+
+<script>
+export default {
+  props: {
+    size: {
+      type: Number,
+      default: 36,
+    },
+  },
+  computed: {
+    spinnerStyle() {
+      return {
+        width: `${this.size}px`,
+        height: `${this.size}px`,
+      };
+    },
+  },
+};
+</script>
 
 <style scoped>
 .loading-spinner {
-  width: 40px;
-  height: 40px;
-  border: 4px solid #f3f3f3;
-  border-top: 4px solid var(--primary-color);
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #bbb;
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }

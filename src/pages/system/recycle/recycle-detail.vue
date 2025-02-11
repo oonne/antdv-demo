@@ -1,16 +1,22 @@
 <template>
-  <div>
-    <Loading />
+  <Loading
+    v-if="loading"
+    class="app-detail-loading"
+  />
+  <div v-else>
+    <div>类型: {{ typeName }}</div>
+    <TextContent :content="detail.content" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { message } from 'ant-design-vue';
 import { useRoute } from 'vue-router';
 import { recycleApi } from '@/api/index';
 import { to, buildErrorMsg } from '@/utils/index';
 import Loading from '@/components/loading/index.vue';
+import TextContent from '@/components/text-content/index';
 import type { IRecycle } from '@/types/recycle';
 
 const route = useRoute();
@@ -20,6 +26,13 @@ const detail = ref<IRecycle>({
   content: '',
 });
 const loading = ref(false);
+
+const typeName = computed(() => {
+  if (detail.value.type === 1) {
+    return '账号';
+  }
+  return '';
+});
 
 /* 查询详情 */
 const getDetail = async () => {
