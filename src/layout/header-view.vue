@@ -1,34 +1,29 @@
 <template>
-  <a-flex
-    justify="space-between"
-    align="center"
+  <!-- 标题 -->
+  <div class="title">
+    {{ title }}
+  </div>
+
+  <!--用户 -->
+  <a-dropdown
+    :trigger="['click']"
+    placement="bottomRight"
   >
-    <!-- 标题 -->
-    <div class="title">
-      {{ title }}
+    <!-- 头像和在线状态 -->
+    <div class="user">
+      {{ staffInfo.name }}
+      <span class="arrow-down" />
     </div>
 
-    <!--用户 -->
-    <a-dropdown
-      :trigger="['click']"
-      placement="bottomRight"
-    >
-      <!-- 头像和在线状态 -->
-      <div class="user">
-        {{ staffInfo.name }}
-        <span class="arrow-down" />
-      </div>
-
-      <template #overlay>
-        <a-menu>
-          <!-- 退出登录 -->
-          <a-menu-item @click="logout">
-            退出登录
-          </a-menu-item>
-        </a-menu>
-      </template>
-    </a-dropdown>
-  </a-flex>
+    <template #overlay>
+      <a-menu>
+        <!-- 退出登录 -->
+        <a-menu-item @click="logout">
+          退出登录
+        </a-menu-item>
+      </a-menu>
+    </template>
+  </a-dropdown>
 </template>
 
 <script lang="ts" setup>

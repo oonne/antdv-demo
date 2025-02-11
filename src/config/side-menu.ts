@@ -5,6 +5,7 @@ interface ISideConfig {
   key: string;
   title: string; // 标题
   icon?: string; // 图标
+  roles?: number[];
   children?: ISideConfig[];
 }
 

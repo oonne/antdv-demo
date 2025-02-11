@@ -9,6 +9,20 @@
   --app-view-padding: 24px;
 }
 
+@font-face {
+  font-family: 'Deng';
+  src: url('@/assets/font/Deng.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Dengl';
+  src: url('@/assets/font/Dengl.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 /* 
  * 列表
  */

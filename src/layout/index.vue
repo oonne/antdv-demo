@@ -71,6 +71,8 @@ useInterval(() => {
   background-color: #fff;
   padding: 0 calc(var(--app-view-padding) + var(--app-view-margin));
   height: var(--header-height);
-  line-height: var(--header-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 </style>
