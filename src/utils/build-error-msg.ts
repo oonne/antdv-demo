@@ -19,17 +19,13 @@ const buildErrorMsg = (props: IProps): string => {
   const { err, defaultMsg } = props;
 
   // 请求或响应失败
-  if (err?.name === 'AxiosError' && err?.message) {
-    if (err.message.includes('timeout')) {
-      return t('msg_request_timeout');
+  if (err?.name === 'AxiosError') {
+    if (err?.response?.data?.message) {
+      return err.response.data.message;
     }
-
-    return err.message;
-  }
-
-  // 不做格式化，直接返回的错误
-  if (err.code === 5000) {
-    return err.msg;
+    if (err?.message) {
+      return err.message;
+    }
   }
 
   // 如果是401，防止多次toast提示，前面的提示先销毁，只显示最后返回的这条提示
