@@ -83,6 +83,24 @@
         <span v-if="record.role === 2">合伙人</span>
       </template>
 
+      <!-- RefreshToken -->
+      <template v-if="column.key === 'refreshToken'">
+        <a-flex
+          align="center"
+          gap="small"
+        >
+          <span>
+            {{ record.refreshToken || '-' }}
+          </span>
+          <Icon
+            v-if="record.refreshToken"
+            icon="copy"
+            class="copy-icon"
+            @click="copyText(record.refreshToken)"
+          />
+        </a-flex>
+      </template>
+
       <!-- 更新时间 -->
       <template v-if="column.key === 'updatedAt'">
         {{ dayjs(record.updatedAt).format('YYYY-MM-DD HH:mm:ss') || '-' }}
@@ -121,10 +139,11 @@ import useTable from '@/hooks/use-table';
 import { useStaffStore } from '@/store/index';
 import { staffApi } from '@/api/index';
 import { to, buildErrorMsg, Feedback } from '@/utils/index';
+import Icon from '@/components/icon-svg/index.vue';
 import type { IStaff } from '@/types/staff';
 
 const router = useRouter();
-const { confirmModal } = Feedback;
+const { confirmModal, copyText } = Feedback;
 const staffStore = useStaffStore();
 const { staffInfo } = storeToRefs(staffStore);
 
@@ -180,6 +199,12 @@ const columns = ref<TableColumnsType>([
     ],
     resizable: true,
     width: 150,
+  },
+  {
+    title: 'RefreshToken',
+    key: 'refreshToken',
+    resizable: true,
+    width: 200,
   },
   {
     title: '更新时间',
@@ -309,4 +334,11 @@ const onDelete = async (record: IStaff) => {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.copy-icon {
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+  fill: #666;
+}
+</style>

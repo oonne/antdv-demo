@@ -83,6 +83,14 @@
         <a-button
           size="small"
           type="link"
+          @click="router.push({ name: 'recycle-detail', query: { recycleId: record.recycleId } })"
+        >
+          详情
+        </a-button>
+        <!-- 删除 -->
+        <a-button
+          size="small"
+          type="link"
           danger
           @click="onDelete(record)"
         >
@@ -97,12 +105,14 @@
 import { ref, onMounted } from 'vue';
 import { message, TableColumnsType } from 'ant-design-vue';
 import dayjs from 'dayjs';
+import { useRouter } from 'vue-router';
 import useTable from '@/hooks/use-table';
 import { recycleApi } from '@/api/index';
 import { to, buildErrorMsg, Feedback } from '@/utils/index';
 import TextContent from '@/components/text-content/index';
 import type { IRecycle } from '@/types/recycle';
 
+const router = useRouter();
 const { confirmModal } = Feedback;
 
 /*

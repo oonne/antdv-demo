@@ -2,7 +2,7 @@
 import type { ILangMsgs } from '@/types/index';
 
 /*
- * 国际化翻译
+ * 按钮
  */
 const msg: ILangMsgs = {
   btn_back: {

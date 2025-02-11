@@ -98,6 +98,16 @@ const pages: RouteRecordRaw[] = [
           title: '回收站',
         },
       },
+      // 回收详情
+      {
+        path: 'recycle-detail',
+        component: () => import('@/pages/system/recycle/recycle-detail.vue'),
+        name: 'recycle-detail',
+        meta: {
+          sideKey: 'recycle',
+          title: '回收详情',
+        },
+      },
     ],
   },
 

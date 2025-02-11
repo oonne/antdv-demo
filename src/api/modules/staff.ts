@@ -17,6 +17,14 @@ export default {
     });
   },
 
+  // 更新RefreshToken
+  updateRefreshToken(data: object) {
+    return request({
+      url: '/staff/update-refresh-token',
+      data,
+    });
+  },
+
   // 新增账号
   addStaff(data: object) {
     return request({

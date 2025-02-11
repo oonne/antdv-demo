@@ -19,6 +19,20 @@ const msg: ILangMsgs = {
     ko_KR: '한국어',
     vi_VN: 'Tiếng Việt',
   },
+  unknown_file: {
+    en_US: 'Unknown File',
+    zh_CN: '未知文件',
+    zh_TW: '未知文件',
+    es_ES: 'Archivo desconocido',
+    fr_FR: 'Fichier inconnu',
+    ru_RU: 'Неизвестный файл',
+    pt_PT: 'Ficheiro desconhecido',
+    de_DE: 'Unbekannte Datei',
+    ja_JP: '不明なファイル',
+    it_IT: 'File sconosciuto',
+    ko_KR: '알 수 없는 파일',
+    vi_VN: 'Tệp không xác định',
+  },
 };
 
 export default msg;
