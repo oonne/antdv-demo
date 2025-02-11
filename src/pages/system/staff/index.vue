@@ -118,6 +118,14 @@
         <a-button
           size="small"
           type="link"
+          :disabled="record.staffId === staffInfo.staffId"
+          @click="onResetToken(record)"
+        >
+          重置登录态
+        </a-button>
+        <a-button
+          size="small"
+          type="link"
           danger
           :disabled="record.staffId === staffInfo.staffId"
           @click="onDelete(record)"
@@ -308,6 +316,29 @@ const onChangeActive = async (record: IStaff) => {
       return item;
     });
   }
+};
+
+/*
+ * 重置登录态
+ */
+const onResetToken = async (record: IStaff) => {
+  const confirm = await confirmModal({
+    title: '重置登录态',
+    content: `确定重置 ${record.name} 的登录态吗？`,
+  });
+
+  if (!confirm) {
+    return;
+  }
+
+  const [err] = await to(staffApi.updateRefreshToken({ staffId: record.staffId }));
+  if (err) {
+    message.error(buildErrorMsg({ err, defaultMsg: '重置登录态失败' }));
+    return;
+  }
+
+  message.success('Token已更新');
+  getList();
 };
 
 /*
