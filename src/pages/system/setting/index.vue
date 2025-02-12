@@ -91,6 +91,13 @@
         <a-button
           size="small"
           type="link"
+          @click="router.push({ name: 'setting-detail', query: { settingId: record.settingId } })"
+        >
+          详情
+        </a-button>
+        <a-button
+          size="small"
+          type="link"
           @click="router.push({ name: 'edit-setting', query: { settingId: record.settingId } })"
         >
           编辑

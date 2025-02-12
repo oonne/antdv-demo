@@ -128,6 +128,16 @@ const pages: RouteRecordRaw[] = [
           title: '新增/编辑系统配置',
         },
       },
+      // 系统配置详情
+      {
+        path: 'setting-detail',
+        component: () => import('@/pages/system/setting/setting-detail.vue'),
+        name: 'setting-detail',
+        meta: {
+          sideKey: 'setting',
+          title: '系统配置详情',
+        },
+      },
     ],
   },
 

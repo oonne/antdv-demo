@@ -4,55 +4,50 @@
     class="app-detail-loading"
   />
   <div v-else>
-    <div>类型: {{ typeName }}</div>
-    <div>删除时间: {{ dayjs(detail.createdAt).format('YYYY-MM-DD HH:mm:ss') }}</div>
-    <div>删除人ID: {{ detail.deleteStaffId }}</div>
-    <div>删除人: {{ detail.deleteStaffName }}</div>
+    <div>KEY: {{ detail.key }}</div>
     <br>
 
-    <div>内容: </div>
-    <TextContent :content="detail.content" />
+    <div>VALUE: </div>
+    <TextContent :content="detail.value" />
+    <br>
+
+    <div>备注: </div>
+    <TextContent :content="detail.remark" />
+    <br>
+
+    <div>更新时间: {{ dayjs(detail.updatedAt).format('YYYY-MM-DD HH:mm:ss') }}</div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import { message } from 'ant-design-vue';
 import { useRoute } from 'vue-router';
 import dayjs from 'dayjs';
-import { recycleApi } from '@/api/index';
+import { settingApi } from '@/api/index';
 import { to, buildErrorMsg } from '@/utils/index';
 import Loading from '@/components/loading/index.vue';
 import TextContent from '@/components/text-content/index';
-import type { IRecycle } from '@/types/recycle';
+import type { ISetting } from '@/types/setting';
 
 const route = useRoute();
 
-const detail = ref<IRecycle>({
-  type: 1,
-  recycleId: '',
-  content: '',
+const detail = ref<ISetting>({
+  settingId: '',
+  key: '',
+  value: '',
+  remark: '',
 });
 const loading = ref(false);
 
-const typeName = computed(() => {
-  if (detail.value.type === 1) {
-    return '账号';
-  }
-  if (detail.value.type === 2) {
-    return '配置';
-  }
-  return '';
-});
-
 /* 查询详情 */
 const getDetail = async () => {
-  if (!route.query.recycleId) {
+  if (!route.query.settingId) {
     return;
   }
 
   loading.value = true;
-  const [err, res] = await to(recycleApi.getDetail({ recycleId: route.query.recycleId }));
+  const [err, res] = await to(settingApi.getDetail({ settingId: route.query.settingId }));
   loading.value = false;
 
   if (err) {
