@@ -58,6 +58,7 @@
 import { ref, onMounted } from 'vue';
 import { message } from 'ant-design-vue';
 import { useRoute, useRouter } from 'vue-router';
+import { emit as busEmit } from 'eventbus-typescript';
 import { staffApi } from '@/api/index';
 import { useStaffStore } from '@/store/index';
 import { to, buildErrorMsg, Utils } from '@/utils/index';
@@ -81,6 +82,7 @@ const formData = ref<IStaff>({
 /* 查询详情 */
 const getDetail = async () => {
   if (!route.query.staffId) {
+    busEmit('UPDATE_PAGE_TITLE', '新增账号');
     return;
   }
 
@@ -90,6 +92,7 @@ const getDetail = async () => {
     return;
   }
   formData.value = res.data;
+  busEmit('UPDATE_PAGE_TITLE', `编辑账号 - ${formData.value.name}`);
 };
 
 /* 进入页面 */

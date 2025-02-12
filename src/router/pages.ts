@@ -85,7 +85,7 @@ const pages: RouteRecordRaw[] = [
         name: 'edit-staff',
         meta: {
           sideKey: 'staff',
-          title: '编辑成员',
+          title: '新增/编辑成员',
         },
       },
       // 回收站
@@ -125,7 +125,7 @@ const pages: RouteRecordRaw[] = [
         name: 'edit-setting',
         meta: {
           sideKey: 'setting',
-          title: '编辑系统配置',
+          title: '新增/编辑系统配置',
         },
       },
     ],

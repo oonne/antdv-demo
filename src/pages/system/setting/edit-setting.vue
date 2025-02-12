@@ -21,9 +21,10 @@
         label="VALUE"
         name="value"
       >
-        <a-input
+        <a-textarea
           v-model:value="formData.value"
           placeholder="请输入VALUE"
+          :auto-size="{ minRows: 3 }"
         />
       </a-form-item>
 
@@ -31,9 +32,10 @@
         label="备注"
         name="remark"
       >
-        <a-input
+        <a-textarea
           v-model:value="formData.remark"
           placeholder="请输入备注"
+          :auto-size="{ minRows: 3 }"
         />
       </a-form-item>
 
@@ -52,6 +54,7 @@
 import { ref, onMounted } from 'vue';
 import { message } from 'ant-design-vue';
 import { useRoute, useRouter } from 'vue-router';
+import { emit as busEmit } from 'eventbus-typescript';
 import { settingApi } from '@/api/index';
 import { to, buildErrorMsg } from '@/utils/index';
 import type { ISetting } from '@/types/setting';
@@ -71,6 +74,7 @@ const formData = ref<ISetting>({
 /* 查询详情 */
 const getDetail = async () => {
   if (!route.query.settingId) {
+    busEmit('UPDATE_PAGE_TITLE', '新增系统配置');
     return;
   }
 
@@ -80,6 +84,7 @@ const getDetail = async () => {
     return;
   }
   formData.value = res.data;
+  busEmit('UPDATE_PAGE_TITLE', `编辑系统配置 - ${formData.value.key}`);
 };
 
 /* 进入页面 */
