@@ -31,7 +31,7 @@ npm run start:dev
 npm run start
 ```
 
-运行后，浏览器访问 [http://localhost:8100](http://localhost:8100/#/) 即可访问  
+运行后，浏览器访问 [http://localhost:11011](http://localhost:11011/#/) 即可访问  
 
 6、编译
 （npde、pnpm环境与上述相同）

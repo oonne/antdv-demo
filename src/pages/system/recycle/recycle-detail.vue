@@ -31,6 +31,9 @@ const typeName = computed(() => {
   if (detail.value.type === 1) {
     return '账号';
   }
+  if (detail.value.type === 2) {
+    return '配置';
+  }
   return '';
 });
 

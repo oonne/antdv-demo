@@ -61,6 +61,7 @@
       <!-- 类型 -->
       <template v-if="column.key === 'type'">
         <span v-if="record.type === 1">账号</span>
+        <span v-if="record.type === 2">配置</span>
       </template>
 
       <!-- 内容 -->
