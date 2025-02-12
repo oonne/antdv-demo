@@ -47,6 +47,10 @@ const sideMenu: ISideConfig[] = [
         title: '文章列表',
       },
       {
+        key: 'img-list',
+        title: '图片管理',
+      },
+      {
         key: 'about-me',
         title: '关于我',
       },

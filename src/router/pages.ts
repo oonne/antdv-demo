@@ -128,12 +128,14 @@ const pages: RouteRecordRaw[] = [
           title: '博客列表',
         },
       },
-      // 资源管理
+      // 图片管理
       {
-        path: 'assets-list',
-        component: () => import('@/pages/blog/assets-list/index.vue'),
-        name: 'assets-list',
+        path: 'img-list',
+        component: () => import('@/pages/blog/img-list/index.vue'),
+        name: 'img-list',
         meta: {
+          sideKey: 'img-list',
+          title: '图片管理',
         },
       },
       // 关于我

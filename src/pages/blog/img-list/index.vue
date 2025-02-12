@@ -1,6 +1,6 @@
 <template>
   <div>
-    资源列表
+    图片管理
   </div>
 </template>
 
