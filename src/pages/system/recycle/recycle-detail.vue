@@ -3,16 +3,25 @@
     v-if="loading"
     class="app-detail-loading"
   />
-  <div v-else>
-    <div>类型: {{ typeName }}</div>
-    <div>删除时间: {{ dayjs(detail.createdAt).format('YYYY-MM-DD HH:mm:ss') }}</div>
-    <div>删除人ID: {{ detail.deleteStaffId }}</div>
-    <div>删除人: {{ detail.deleteStaffName }}</div>
-    <br>
 
-    <div>内容: </div>
-    <TextContent :content="detail.content" />
-  </div>
+  <a-descriptions
+    v-else
+    :title="`类型: ${typeName}`"
+    bordered
+  >
+    <a-descriptions-item label="删除时间">
+      {{ dayjs(detail.createdAt).format('YYYY-MM-DD HH:mm:ss') }}
+    </a-descriptions-item>
+    <a-descriptions-item label="操作者">
+      {{ detail.deleteStaffName }}
+    </a-descriptions-item>
+    <a-descriptions-item label="操作者ID">
+      {{ detail.deleteStaffId }}
+    </a-descriptions-item>
+    <a-descriptions-item label="内容">
+      <TextContent :content="detail.content" />
+    </a-descriptions-item>
+  </a-descriptions>
 </template>
 
 <script setup lang="ts">

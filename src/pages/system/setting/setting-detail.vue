@@ -3,20 +3,33 @@
     v-if="loading"
     class="app-detail-loading"
   />
-  <div v-else>
-    <div>KEY: {{ detail.key }}</div>
-    <br>
 
-    <div>VALUE: </div>
-    <TextContent :content="detail.value" />
-    <br>
-
-    <div>备注: </div>
-    <TextContent :content="detail.remark" />
-    <br>
-
-    <div>更新时间: {{ dayjs(detail.updatedAt).format('YYYY-MM-DD HH:mm:ss') }}</div>
-  </div>
+  <a-descriptions
+    v-else
+    bordered
+    :column="1"
+  >
+    <a-descriptions-item
+      label="更新时间"
+    >
+      {{ dayjs(detail.updatedAt).format('YYYY-MM-DD HH:mm:ss') }}
+    </a-descriptions-item>
+    <a-descriptions-item
+      label="KEY"
+    >
+      {{ detail.key }}
+    </a-descriptions-item>
+    <a-descriptions-item
+      label="VALUE"
+    >
+      <TextContent :content="detail.value" />
+    </a-descriptions-item>
+    <a-descriptions-item
+      label="备注"
+    >
+      <TextContent :content="detail.remark" />
+    </a-descriptions-item>
+  </a-descriptions>
 </template>
 
 <script setup lang="ts">
