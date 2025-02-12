@@ -32,6 +32,11 @@ const sideMenu: ISideConfig[] = [
         key: 'recycle',
         title: '回收站',
       },
+      {
+        key: 'setting',
+        title: '系统配置',
+        roles: [1],
+      },
     ],
   },
 

@@ -108,6 +108,26 @@ const pages: RouteRecordRaw[] = [
           title: '回收详情',
         },
       },
+      // 系统配置
+      {
+        path: 'setting',
+        component: () => import('@/pages/system/setting/index.vue'),
+        name: 'setting',
+        meta: {
+          sideKey: 'setting',
+          title: '系统配置',
+        },
+      },
+      // 新增/编辑系统配置
+      {
+        path: 'edit-setting',
+        component: () => import('@/pages/system/setting/edit-setting.vue'),
+        name: 'edit-setting',
+        meta: {
+          sideKey: 'setting',
+          title: '编辑系统配置',
+        },
+      },
     ],
   },
 
