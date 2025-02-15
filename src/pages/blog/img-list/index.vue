@@ -3,7 +3,7 @@
     <a-space>
       <a-button
         type="primary"
-        @click="uploadModalRef?.open()"
+        @click="uploadModalRef?.openModal()"
       >
         上传图片
       </a-button>
@@ -82,7 +82,10 @@
   </a-table>
 
   <!-- 上传图片弹框 -->
-  <UploadModal ref="uploadModalRef" />
+  <UploadModal
+    ref="uploadModalRef"
+    @save="getList"
+  />
 </template>
 
 <script setup lang="ts">

@@ -1,12 +1,10 @@
 <template>
   <a-modal
-    v-model:visible="visible"
+    v-model:visible="showModal"
     title="上传图片"
-    @ok="handleOk"
-    @cancel="handleCancel"
+    @ok="onUpload"
   >
     <div>
-      <!-- TODO: 这里添加上传组件 -->
       TODO
     </div>
   </a-modal>
@@ -15,22 +13,38 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const visible = ref(false);
+const emits = defineEmits(['save']);
 
-const handleOk = () => {
-  visible.value = false;
+/*
+ * 弹框
+ */
+const showModal = ref(false);
+
+// 打开弹框
+const openModal = () => {
+  showModal.value = true;
 };
 
-const handleCancel = () => {
-  visible.value = false;
-};
-
-// 对外暴露打开弹框的方法
-const open = () => {
-  visible.value = true;
-};
-
+// 暴露方法
 defineExpose({
-  open,
+  openModal,
 });
+
+/*
+ * 上传
+ */
+const loading = ref(false);
+
+// 上传
+const onUpload = () => {
+  if (loading.value) {
+    return;
+  }
+
+  // loading.value = true;
+  // TODO
+
+  showModal.value = false;
+  emits('save');
+};
 </script>

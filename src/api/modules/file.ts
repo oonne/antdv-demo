@@ -1,3 +1,4 @@
+import config from '@/config/index';
 import request from '../req';
 
 export default {
@@ -17,19 +18,26 @@ export default {
     });
   },
 
-  // 新增文件
-  addFile(data: object) {
-    return request({
-      url: '/file/add',
-      data,
-    });
-  },
-
   // 删除文件
   deleteFile(data: object) {
     return request({
       url: '/file/delete',
       data,
+    });
+  },
+
+  // 上传文件
+  upload(file: File) {
+    const formdata = new FormData();
+    formdata.append('file', file);
+
+    return request({
+      url: '/file/upload',
+      data: formdata,
+      timeout: config.uploadTimeOut,
+      headers: {
+        'Content-Type': 'multipart/form-data; charset=utf-8',
+      },
     });
   },
 };
