@@ -27,9 +27,10 @@ export default {
   },
 
   // 上传文件
-  upload(file: File) {
+  upload({ file, type }: { file: File; type: string }) {
     const formdata = new FormData();
     formdata.append('file', file);
+    formdata.append('type', type);
 
     return request({
       url: '/file/upload',

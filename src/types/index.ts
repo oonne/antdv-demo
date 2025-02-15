@@ -48,3 +48,9 @@ export interface ISorter {
   order?: 'ascend' | 'descend';
   [key: string]: any;
 }
+
+// 上传事件
+export interface IUploadEvent {
+  file: File;
+  [key: string]: any;
+}

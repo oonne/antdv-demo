@@ -1,12 +1,19 @@
 <template>
   <div class="app-view-header">
     <a-space>
-      <a-button
-        type="primary"
-        @click="uploadModalRef?.openModal()"
+      <a-upload
+        :show-upload-list="false"
+        name="file"
+        :custom-request="onUpload"
+        accept=".jpg,.jpeg,.png,.gif,.webp"
       >
-        上传图片
-      </a-button>
+        <a-button
+          type="primary"
+          :loading="uploading"
+        >
+          上传图片
+        </a-button>
+      </a-upload>
     </a-space>
 
     <div class="app-view-header-sum">
@@ -80,12 +87,6 @@
       </template>
     </template>
   </a-table>
-
-  <!-- 上传图片弹框 -->
-  <UploadModal
-    ref="uploadModalRef"
-    @save="getList"
-  />
 </template>
 
 <script setup lang="ts">
@@ -96,7 +97,7 @@ import useTable from '@/hooks/use-table';
 import { fileApi } from '@/api/index';
 import { to, buildErrorMsg, Feedback } from '@/utils/index';
 import type { IFile } from '@/types/file';
-import UploadModal from './components/upload-modal.vue';
+import type { IUploadEvent } from '@/types/index';
 
 const { confirmModal } = Feedback;
 
@@ -216,9 +217,27 @@ const onDelete = async (record: IFile) => {
 };
 
 /*
- * 上传图片
+ * 上传
  */
-const uploadModalRef = ref<InstanceType<typeof UploadModal>>();
+const uploading = ref(false);
+
+const onUpload = async (event: IUploadEvent) => {
+  if (uploading.value) {
+    return;
+  }
+
+  uploading.value = true;
+  const [err] = await to(fileApi.upload({ file: event.file, type: '1' }));
+  uploading.value = false;
+
+  if (err) {
+    message.error(buildErrorMsg({ err, defaultMsg: '上传失败' }));
+    return;
+  }
+
+  message.success('上传成功');
+  getList();
+};
 
 </script>
 
