@@ -5,7 +5,7 @@
         type="primary"
         @click="router.push({ name: 'edit-img' })"
       >
-        新增图片
+        上传图片
       </a-button>
     </a-space>
 
@@ -27,7 +27,7 @@
   >
     <template #customFilterDropdown="{ setSelectedKeys, selectedKeys, confirm, column }">
       <div class="table-filter-dropdown">
-        <template v-if="column.key === 'name' || column.key === 'remark'">
+        <template v-if="column.key === 'fileName'">
           <a-input-search
             :value="selectedKeys[0]"
             size="small"
@@ -41,11 +41,8 @@
 
     <!-- 显示当前的搜索条件 -->
     <template #headerCell="{ column }">
-      <template v-if="column.key === 'name' && filters.name">
-        图片名称({{ filters.name[0] }})
-      </template>
-      <template v-if="column.key === 'remark' && filters.remark">
-        备注({{ filters.remark[0] }})
+      <template v-if="column.key === 'fileName' && filters.fileName">
+        文件名({{ filters.fileName[0] }})
       </template>
     </template>
 
@@ -56,21 +53,13 @@
       </template>
 
       <!-- 图片预览 -->
-      <template v-if="column.key === 'url'">
-        <img
-          :src="record.url"
-          style="max-width: 100px; max-height: 60px;"
-        >
+      <template v-if="column.key === 'preview'">
+        TODO
       </template>
 
-      <!-- 图片名称 -->
-      <template v-if="column.key === 'name'">
-        {{ record.name || '-' }}
-      </template>
-
-      <!-- 备注 -->
-      <template v-if="column.key === 'remark'">
-        {{ record.remark || '-' }}
+      <!-- 文件名 -->
+      <template v-if="column.key === 'fileName'">
+        {{ record.fileName }}
       </template>
 
       <!-- 更新时间 -->
@@ -80,20 +69,6 @@
 
       <!-- 操作 -->
       <template v-if="column.key === 'operation'">
-        <a-button
-          size="small"
-          type="link"
-          @click="router.push({ name: 'img-detail', query: { imgId: record.imgId } })"
-        >
-          详情
-        </a-button>
-        <a-button
-          size="small"
-          type="link"
-          @click="router.push({ name: 'edit-img', query: { imgId: record.imgId } })"
-        >
-          编辑
-        </a-button>
         <a-button
           size="small"
           type="link"
@@ -129,22 +104,15 @@ const columns = ref<TableColumnsType>([
   },
   {
     title: '预览',
-    key: 'url',
-    width: 120,
+    key: 'preview',
+    width: 150,
   },
   {
-    title: '图片名称',
-    key: 'name',
+    title: '文件名',
+    key: 'fileName',
     sorter: true,
     customFilterDropdown: true,
     resizable: true,
-    width: 200,
-  },
-  {
-    title: '备注',
-    key: 'remark',
-    resizable: true,
-    customFilterDropdown: true,
     width: 200,
   },
   {
@@ -181,11 +149,8 @@ const getList = async () => {
     pageNo: pagination.value.current,
     pageSize: pagination.value.pageSize,
   };
-  if (filters.value.name) {
-    [params.name] = filters.value.name;
-  }
-  if (filters.value.remark) {
-    [params.remark] = filters.value.remark;
+  if (filters.value.fileName) {
+    [params.fileName] = filters.value.fileName;
   }
   if (sorter.value.columnKey) {
     params.sortField = sorter.value.columnKey;
@@ -213,7 +178,7 @@ onMounted(() => {
 const onDelete = async (record: IFile) => {
   const confirm = await confirmModal({
     title: '删除',
-    content: `确定删除图片 ${record.name} 吗？`,
+    content: '确定删除吗？',
   });
 
   if (!confirm) {
