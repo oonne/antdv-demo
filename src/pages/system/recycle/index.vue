@@ -171,7 +171,9 @@ const columns = ref<TableColumnsType>([
   },
 ]);
 
-/* 列表 */
+/*
+ * 列表
+ */
 const dataList = ref<IRecycle[]>([]);
 const {
   loading,
@@ -184,7 +186,9 @@ const {
   rowClassName,
 } = useTable();
 
-/* 查询列表 */
+/*
+ * 获取数据
+ */
 const getList = async () => {
   loading.value = true;
   const params: any = {

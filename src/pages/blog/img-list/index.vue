@@ -3,7 +3,7 @@
     <a-space>
       <a-button
         type="primary"
-        @click="router.push({ name: 'edit-img' })"
+        @click="uploadModalRef?.open()"
       >
         上传图片
       </a-button>
@@ -80,21 +80,26 @@
       </template>
     </template>
   </a-table>
+
+  <!-- 上传图片弹框 -->
+  <UploadModal ref="uploadModalRef" />
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
 import { message, TableColumnsType } from 'ant-design-vue';
 import dayjs from 'dayjs';
 import useTable from '@/hooks/use-table';
 import { fileApi } from '@/api/index';
 import { to, buildErrorMsg, Feedback } from '@/utils/index';
 import type { IFile } from '@/types/file';
+import UploadModal from './components/upload-modal.vue';
 
-const router = useRouter();
 const { confirmModal } = Feedback;
 
+/*
+ * 列表项
+ */
 const columns = ref<TableColumnsType>([
   {
     title: '#',
@@ -131,6 +136,9 @@ const columns = ref<TableColumnsType>([
   },
 ]);
 
+/*
+ * 列表
+ */
 const dataList = ref<IFile[]>([]);
 const {
   loading,
@@ -143,6 +151,9 @@ const {
   rowClassName,
 } = useTable();
 
+/*
+ * 获取数据
+ */
 const getList = async () => {
   loading.value = true;
   const params: any = {
@@ -171,10 +182,16 @@ const getList = async () => {
 };
 setGetDataFunction(getList);
 
+/*
+ * 进入页面
+ */
 onMounted(() => {
   getList();
 });
 
+/*
+ * 删除
+ */
 const onDelete = async (record: IFile) => {
   const confirm = await confirmModal({
     title: '删除',
@@ -194,6 +211,12 @@ const onDelete = async (record: IFile) => {
   message.success('删除成功');
   getList();
 };
+
+/*
+ * 上传图片
+ */
+const uploadModalRef = ref<InstanceType<typeof UploadModal>>();
+
 </script>
 
 <style scoped></style>
