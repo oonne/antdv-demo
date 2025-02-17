@@ -1,6 +1,8 @@
 import config from '@/config/index';
+import { Utils } from '@/utils/index';
 import request from '../req';
 
+const { getFileMd5 } = Utils;
 export default {
   // 查询文件列表
   getList(data: object) {
@@ -27,9 +29,11 @@ export default {
   },
 
   // 上传文件
-  upload({ file, type }: { file: File; type: string }) {
+  async upload({ file, type }: { file: File; type: string }) {
     const formdata = new FormData();
     formdata.append('file', file);
+    formdata.append('suffix', file.name.split('.').pop() || '');
+    formdata.append('fileMd5', await getFileMd5(file));
     formdata.append('type', type);
 
     return request({

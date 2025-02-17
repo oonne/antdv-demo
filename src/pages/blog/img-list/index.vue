@@ -227,7 +227,7 @@ const onUpload = async (event: IUploadEvent) => {
   }
 
   uploading.value = true;
-  const [err] = await to(fileApi.upload({ file: event.file, type: '1' }));
+  const [err] = await to(fileApi.upload({ file: event.file, type: 'img' }));
   uploading.value = false;
 
   if (err) {
