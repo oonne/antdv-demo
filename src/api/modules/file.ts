@@ -29,7 +29,7 @@ export default {
   },
 
   // 上传文件
-  async upload({ file, type }: { file: File; type: string }) {
+  async upload({ file, type }: { file: File; type: 'img' | 'file' }) {
     const formdata = new FormData();
     formdata.append('file', file);
     formdata.append('suffix', file.name.split('.').pop() || '');
