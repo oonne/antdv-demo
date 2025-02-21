@@ -34,7 +34,7 @@
   >
     <template #customFilterDropdown="{ setSelectedKeys, selectedKeys, confirm, column }">
       <div class="table-filter-dropdown">
-        <template v-if="column.key === 'fileName'">
+        <template v-if="column.key === 'fileName' || column.key === 'fileSize'">
           <a-input-search
             :value="selectedKeys[0]"
             size="small"
@@ -61,12 +61,30 @@
 
       <!-- 图片预览 -->
       <template v-if="column.key === 'preview'">
-        TODO
+        <a-image
+          :width="150"
+          :src="`${VITE_FILE_URL}/${record.fileName}`"
+        />
       </template>
 
       <!-- 文件名 -->
       <template v-if="column.key === 'fileName'">
-        {{ record.fileName }}
+        <a-flex
+          align="center"
+          gap="small"
+        >
+          <span>{{ record.fileName }}</span>
+          <Icon
+            icon="copy"
+            class="copy-icon"
+            @click="copyText(`${VITE_FILE_URL}/${record.fileName}`)"
+          />
+        </a-flex>
+      </template>
+
+      <!-- 文件大小 -->
+      <template v-if="column.key === 'fileSize'">
+        {{ record.fileSize }}
       </template>
 
       <!-- 更新时间 -->
@@ -96,10 +114,12 @@ import dayjs from 'dayjs';
 import useTable from '@/hooks/use-table';
 import { fileApi } from '@/api/index';
 import { to, buildErrorMsg, Feedback } from '@/utils/index';
+import Icon from '@/components/icon-svg/index.vue';
 import type { IFile } from '@/types/file';
 import type { IUploadEvent } from '@/types/index';
 
-const { confirmModal } = Feedback;
+const { VITE_FILE_URL } = import.meta.env;
+const { confirmModal, copyText } = Feedback;
 
 /*
  * 列表项
@@ -123,6 +143,14 @@ const columns = ref<TableColumnsType>([
     customFilterDropdown: true,
     resizable: true,
     width: 200,
+  },
+  {
+    title: '文件大小',
+    key: 'fileSize',
+    sorter: true,
+    customFilterDropdown: true,
+    resizable: true,
+    width: 150,
   },
   {
     title: '更新时间',
@@ -241,4 +269,10 @@ const onUpload = async (event: IUploadEvent) => {
 
 </script>
 
-<style scoped></style>
+<style scoped>
+.copy-icon {
+  fill: var(--primary-color);
+  width: 16px;
+  height: 16px;
+}
+</style>

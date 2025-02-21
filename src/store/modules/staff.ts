@@ -95,7 +95,7 @@ export default defineStore('staff', () => {
     }));
     if (err) {
       // 换票失败，退出登录
-      if (err.code === 1001003) {
+      if (err?.code === 1001003) {
         clear();
         window.location.reload();
       }
