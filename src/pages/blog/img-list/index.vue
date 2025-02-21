@@ -84,7 +84,7 @@
 
       <!-- 文件大小 -->
       <template v-if="column.key === 'fileSize'">
-        {{ record.fileSize }}
+        {{ getFileSize(record.fileSize) }}
       </template>
 
       <!-- 更新时间 -->
@@ -113,13 +113,16 @@ import { message, TableColumnsType } from 'ant-design-vue';
 import dayjs from 'dayjs';
 import useTable from '@/hooks/use-table';
 import { fileApi } from '@/api/index';
-import { to, buildErrorMsg, Feedback } from '@/utils/index';
+import {
+  to, buildErrorMsg, Feedback, Common,
+} from '@/utils/index';
 import Icon from '@/components/icon-svg/index.vue';
 import type { IFile } from '@/types/file';
 import type { IUploadEvent } from '@/types/index';
 
 const { VITE_FILE_URL } = import.meta.env;
 const { confirmModal, copyText } = Feedback;
+const { getFileSize } = Common;
 
 /*
  * 列表项
@@ -194,6 +197,9 @@ const getList = async () => {
   };
   if (filters.value.fileName) {
     [params.fileName] = filters.value.fileName;
+  }
+  if (filters.value.fileSize) {
+    [params.fileSize] = filters.value.fileSize;
   }
   if (sorter.value.columnKey) {
     params.sortField = sorter.value.columnKey;
