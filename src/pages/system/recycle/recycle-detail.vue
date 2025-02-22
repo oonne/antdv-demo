@@ -51,6 +51,9 @@ const typeName = computed(() => {
   if (detail.value.type === 2) {
     return '配置';
   }
+  if (detail.value.type === 3) {
+    return '博客';
+  }
   return '';
 });
 
