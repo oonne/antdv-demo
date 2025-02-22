@@ -32,8 +32,16 @@
     @resize-column="onResizeColumn"
     @change="changeTable"
   >
-    <template #customFilterDropdown="{ setSelectedKeys, selectedKeys, confirm, column }">
+    <template
+      #customFilterDropdown="{
+        setSelectedKeys,
+        selectedKeys,
+        confirm,
+        column
+      }"
+    >
       <div class="table-filter-dropdown">
+        <!-- 搜索 -->
         <template v-if="column.key === 'fileName' || column.key === 'fileSize'">
           <a-input-search
             :value="selectedKeys[0]"

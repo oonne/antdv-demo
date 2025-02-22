@@ -34,7 +34,7 @@
       }"
     >
       <div class="table-filter-dropdown">
-        <!-- 搜索账号名 -->
+        <!-- 搜索 -->
         <template v-if="column.key === 'name'">
           <a-input-search
             :value="selectedKeys[0]"

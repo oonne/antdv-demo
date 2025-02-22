@@ -34,7 +34,7 @@
       }"
     >
       <div class="table-filter-dropdown">
-        <!-- 搜索配置名称 -->
+        <!-- 搜索 -->
         <template v-if="column.key === 'key' || column.key === 'value' || column.key === 'remark'">
           <a-input-search
             :value="selectedKeys[0]"

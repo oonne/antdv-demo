@@ -49,7 +49,7 @@ const sideMenu: ISideConfig[] = [
     children: [
       {
         key: 'blog-list',
-        title: '文章列表',
+        title: '博客列表',
       },
       {
         key: 'img-list',

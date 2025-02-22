@@ -26,7 +26,7 @@
       }"
     >
       <div class="table-filter-dropdown">
-        <!-- 搜索内容、删除者 -->
+        <!-- 搜索 -->
         <template v-if="column.key === 'content' || column.key === 'deleteStaffName'">
           <a-input-search
             :value="selectedKeys[0]"
