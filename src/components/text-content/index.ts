@@ -14,10 +14,18 @@ const CreateText = (props: IProps) => {
 
   const nodes: (VNode | string)[] = [];
 
-  props.content.split('\n').forEach((item, index) => {
+  // 如果以\n开头，则去掉第一个\n
+  let { content } = props;
+  if (content.startsWith('\n')) {
+    content = content.slice(1);
+  }
+
+  // 按换行符分割
+  content.split('\n').forEach((item, index) => {
     if (index > 0) {
       nodes.push(h('br'));
     }
+
     // 检查文本是否包含链接
     const urlRegex = /(https?:\/\/[^\s]+)/g;
     if (urlRegex.test(item)) {
