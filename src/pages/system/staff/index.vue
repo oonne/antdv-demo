@@ -307,7 +307,11 @@ const onChangeActive = async (record: IStaff) => {
     return;
   }
 
-  const [err] = await to(staffApi.updateStaff(record));
+  const [err] = await to(staffApi.updateStaff({
+    staffId: record.staffId,
+    isActive: record.isActive,
+  }));
+
   if (err) {
     message.error(buildErrorMsg({ err, defaultMsg: '操作失败' }));
     dataList.value = dataList.value.map((item) => {

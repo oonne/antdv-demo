@@ -83,6 +83,15 @@
         {{ record.linkUrl }}
       </template>
 
+      <!-- 是否启用 -->
+      <template v-if="column.key === 'isActive'">
+        <a-switch
+          v-model:checked="record.isActive"
+          size="small"
+          @change="onChangeActive(record)"
+        />
+      </template>
+
       <!-- 更新时间 -->
       <template v-if="column.key === 'updatedAt'">
         {{ dayjs(record.updatedAt).format('YYYY-MM-DD HH:mm:ss') || '-' }}
@@ -164,6 +173,12 @@ const columns = ref<TableColumnsType>([
     width: 150,
   },
   {
+    title: '是否启用',
+    key: 'isActive',
+    resizable: true,
+    width: 100,
+  },
+  {
     title: '更新时间',
     key: 'updatedAt',
     sorter: true,
@@ -237,6 +252,28 @@ setGetDataFunction(getList);
 onMounted(() => {
   getList();
 });
+/*
+ * 启用/禁用
+ */
+const onChangeActive = async (record: IBlog) => {
+  const [err] = await to(blogApi.updateBlog({
+    blogId: record.blogId,
+    isActive: record.isActive,
+  }));
+
+  if (err) {
+    message.error(buildErrorMsg({ err, defaultMsg: '操作失败' }));
+    dataList.value = dataList.value.map((item) => {
+      if (item.blogId === record.blogId) {
+        return {
+          ...item,
+          isActive: !record.isActive,
+        };
+      }
+      return item;
+    });
+  }
+};
 
 /*
  * 删除
