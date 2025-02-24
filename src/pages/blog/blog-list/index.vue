@@ -54,6 +54,9 @@
       <template v-if="column.key === 'title' && filters.title">
         标题({{ filters.title[0] }})
       </template>
+      <template v-if="column.key === 'publishDate' && filters.publishDate">
+        发布日期({{ filters.publishDate[0] }})
+      </template>
       <template v-if="column.key === 'content' && filters.content">
         内容({{ filters.content[0] }})
       </template>
@@ -71,6 +74,11 @@
       <!-- 标题 -->
       <template v-if="column.key === 'title'">
         {{ record.title }}
+      </template>
+
+      <!-- 发布日期 -->
+      <template v-if="column.key === 'publishDate'">
+        {{ dayjs(record.publishDate).format('YYYY-MM-DD') }}
       </template>
 
       <!-- 内容 -->
@@ -152,6 +160,14 @@ const columns = ref<TableColumnsType>([
   {
     title: '标题',
     key: 'title',
+    sorter: true,
+    customFilterDropdown: true,
+    resizable: true,
+    width: 200,
+  },
+  {
+    title: '发布日期',
+    key: 'publishDate',
     sorter: true,
     customFilterDropdown: true,
     resizable: true,

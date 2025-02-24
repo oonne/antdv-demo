@@ -158,6 +158,16 @@ const pages: RouteRecordRaw[] = [
           title: '博客列表',
         },
       },
+      // 新增/编辑博客
+      {
+        path: 'edit-blog',
+        component: () => import('@/pages/blog/blog-list/edit-blog.vue'),
+        name: 'edit-blog',
+        meta: {
+          sideKey: 'blog-list',
+          title: '新增/编辑博客',
+        },
+      },
       // 图片管理
       {
         path: 'img-list',

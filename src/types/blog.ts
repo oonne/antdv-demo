@@ -3,13 +3,11 @@ export interface IBlog {
   id?: string;
   blogId: string;
   title: string;
+  publishDate: string;
   content: string;
-  publishDate?: string;
-  isActive?: boolean;
-  linkUrl?: string;
+  isActive: boolean;
+  linkUrl: string;
   description?: string;
   keywords?: string;
-  createdAt: string;
-  updatedAt: string;
   [key: string]: any;
 }
