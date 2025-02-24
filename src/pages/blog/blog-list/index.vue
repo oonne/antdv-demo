@@ -155,6 +155,13 @@
         <a-button
           size="small"
           type="link"
+          @click="router.push({ name: 'edit-html', query: { blogId: record.blogId } })"
+        >
+          编辑HTML
+        </a-button>
+        <a-button
+          size="small"
+          type="link"
           danger
           @click="onDelete(record)"
         >
@@ -224,6 +231,17 @@ const columns = ref<TableColumnsType>([
   {
     title: '是否启用',
     key: 'isActive',
+    filters: [
+      {
+        text: '启用',
+        value: true,
+      },
+      {
+        text: '禁用',
+        value: false,
+      },
+    ],
+    filterMultiple: false,
     resizable: true,
     width: 100,
   },
@@ -281,6 +299,9 @@ const getList = async () => {
   }
   if (filters.value.linkUrl) {
     [params.linkUrl] = filters.value.linkUrl;
+  }
+  if (filters.value.isActive) {
+    [params.isActive] = filters.value.isActive;
   }
   if (sorter.value.columnKey) {
     params.sortField = sorter.value.columnKey;
