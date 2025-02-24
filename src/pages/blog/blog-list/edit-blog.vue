@@ -80,6 +80,7 @@
 import { ref, onMounted } from 'vue';
 import { message } from 'ant-design-vue';
 import { useRoute, useRouter } from 'vue-router';
+import dayjs from 'dayjs';
 import { emit as busEmit } from 'eventbus-typescript';
 import { blogApi } from '@/api/index';
 import { to, buildErrorMsg } from '@/utils/index';
@@ -113,7 +114,10 @@ const getDetail = async () => {
     message.error(buildErrorMsg({ err, defaultMsg: '查询失败' }));
     return;
   }
-  formData.value = res.data;
+  formData.value = {
+    ...res.data,
+    publishDate: dayjs(res.data.publishDate),
+  };
   busEmit('UPDATE_PAGE_TITLE', `编辑博客 - ${formData.value.title}`);
 };
 
