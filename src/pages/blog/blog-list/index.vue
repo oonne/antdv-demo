@@ -33,6 +33,7 @@
       }"
     >
       <div class="table-filter-dropdown">
+        <!-- 搜索 -->
         <template
           v-if="column.key === 'title'
             || column.key === 'content'
@@ -46,6 +47,18 @@
             @search="confirm"
           />
         </template>
+        <!-- 发布日期 -->
+        <template v-if="column.key === 'publishDate'">
+          <a-range-picker
+            :value="selectedKeys[0]"
+            size="small"
+            allow-clear
+            @change="(e: any) => {
+              setSelectedKeys(e ? [e] : []);
+              confirm();
+            }"
+          />
+        </template>
       </div>
     </template>
 
@@ -55,7 +68,9 @@
         标题({{ filters.title[0] }})
       </template>
       <template v-if="column.key === 'publishDate' && filters.publishDate">
-        发布日期({{ filters.publishDate[0] }})
+        发布日期({{ filters.publishDate[0].map(
+          (item: any) => dayjs(item).format('YYYY-MM-DD'),
+        ).join(' ~ ') }})
       </template>
       <template v-if="column.key === 'content' && filters.content">
         内容({{ filters.content[0] }})
@@ -88,7 +103,22 @@
 
       <!-- 链接 -->
       <template v-if="column.key === 'linkUrl'">
-        {{ record.linkUrl }}
+        <a-flex
+          align="center"
+          gap="small"
+        >
+          <a
+            :href="`${VITE_BLOG_URL}/${record.linkUrl}`"
+            target="_blank"
+          >
+            {{ record.linkUrl }}
+          </a>
+          <Icon
+            icon="copy"
+            class="copy-icon"
+            @click="copyText(`${VITE_BLOG_URL}/${record.linkUrl}`)"
+          />
+        </a-flex>
       </template>
 
       <!-- 是否启用 -->
@@ -142,10 +172,12 @@ import dayjs from 'dayjs';
 import useTable from '@/hooks/use-table';
 import { blogApi } from '@/api/index';
 import { to, buildErrorMsg, Feedback } from '@/utils/index';
+import Icon from '@/components/icon-svg/index.vue';
 import type { IBlog } from '@/types/blog';
 
+const { VITE_BLOG_URL } = import.meta.env;
 const router = useRouter();
-const { confirmModal } = Feedback;
+const { confirmModal, copyText } = Feedback;
 
 /*
  * 列表项
@@ -237,11 +269,16 @@ const getList = async () => {
   if (filters.value.title) {
     [params.title] = filters.value.title;
   }
-  if (filters.value.description) {
-    [params.description] = filters.value.description;
+  if (filters.value.publishDate) {
+    params.publishDate = filters.value.publishDate[0].map(
+      (item: any) => dayjs(item).valueOf(),
+    ).join(',');
   }
-  if (filters.value.tags) {
-    [params.tags] = filters.value.tags;
+  if (filters.value.content) {
+    [params.content] = filters.value.content;
+  }
+  if (filters.value.linkUrl) {
+    [params.linkUrl] = filters.value.linkUrl;
   }
   if (sorter.value.columnKey) {
     params.sortField = sorter.value.columnKey;
@@ -315,4 +352,10 @@ const onDelete = async (record: IBlog) => {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.copy-icon {
+  fill: var(--primary-color);
+  width: 16px;
+  height: 16px;
+}
+</style>
