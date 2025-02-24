@@ -1,6 +1,7 @@
 import { ref } from 'vue';
 import { TableColumnType, PaginationProps } from 'ant-design-vue';
 import { useRoute, useRouter } from 'vue-router';
+import dayjs from 'dayjs';
 import { useBasicStore } from '@/store/index';
 import { ISorter, IFilter } from '@/types/index';
 
@@ -75,14 +76,34 @@ const useTable = () => {
     basicStore.setPageSize(pagination.value.pageSize);
   };
 
-  /* 表格宽度拖拽 */
+  /*
+   * 表格宽度拖拽
+   */
   const onResizeColumn = (width: number, column: TableColumnType) => {
     // eslint-disable-next-line no-param-reassign
     column.width = width;
   };
 
-  /* 斑马线 */
+  /*
+   * 斑马线
+   */
   const rowClassName = (_record: any, index: number) => (index % 2 === 1 ? 'table-striped' : null);
+
+  /*
+   * 日期范围筛选器的预设值
+   */
+  const rangePresets = ref([
+    { label: '今天', value: [dayjs(), dayjs()] },
+    { label: '最近30天', value: [dayjs().add(-30, 'd'), dayjs()] },
+    { label: '本月', value: [dayjs().startOf('month'), dayjs().endOf('month')] },
+    {
+      label: '上月',
+      value: [
+        dayjs().subtract(1, 'month').startOf('month'),
+        dayjs().subtract(1, 'month').endOf('month'),
+      ],
+    },
+  ]);
 
   /*
    * 返回的属性和方法
@@ -98,6 +119,7 @@ const useTable = () => {
     changeTable,
     onResizeColumn,
     rowClassName,
+    rangePresets,
   };
 };
 

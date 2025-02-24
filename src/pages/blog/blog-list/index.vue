@@ -53,6 +53,7 @@
             :value="selectedKeys[0]"
             size="small"
             allow-clear
+            :presets="rangePresets"
             @change="(e: any) => {
               setSelectedKeys(e ? [e] : []);
               confirm();
@@ -255,6 +256,7 @@ const {
   changeTable,
   onResizeColumn,
   rowClassName,
+  rangePresets,
 } = useTable();
 
 /*
