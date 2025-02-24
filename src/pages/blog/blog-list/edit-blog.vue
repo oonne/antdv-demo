@@ -29,13 +29,6 @@
         />
       </a-form-item>
 
-      <a-form-item label="内容">
-        <a-textarea
-          v-model:value="formData.content"
-          placeholder="请输入内容"
-        />
-      </a-form-item>
-
       <a-form-item label="是否启用">
         <a-switch v-model:checked="formData.isActive" />
       </a-form-item>
@@ -62,6 +55,13 @@
         <a-input
           v-model:value="formData.keywords"
           placeholder="请输入Keywords"
+        />
+      </a-form-item>
+
+      <a-form-item label="内容">
+        <a-textarea
+          v-model:value="formData.content"
+          placeholder="请输入内容"
         />
       </a-form-item>
 

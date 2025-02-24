@@ -6,9 +6,14 @@
 
   <a-descriptions
     v-else
-    :title="`类型: ${typeName}`"
     bordered
   >
+    <a-descriptions-item
+      label="类型"
+      :span="3"
+    >
+      {{ typeName }}
+    </a-descriptions-item>
     <a-descriptions-item label="删除时间">
       {{ dayjs(detail.createdAt).format('YYYY-MM-DD HH:mm:ss') }}
     </a-descriptions-item>
@@ -18,6 +23,7 @@
     <a-descriptions-item label="操作者ID">
       {{ detail.deleteStaffId }}
     </a-descriptions-item>
+
     <a-descriptions-item label="内容">
       <TextContent :content="detail.content" />
     </a-descriptions-item>
