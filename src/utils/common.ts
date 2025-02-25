@@ -24,6 +24,14 @@ const getFileSize = (fileSize?: number, fixed = 2) => {
   return `${(fileSize / 1024 / 1024 / 1024).toFixed(fixed)}GB`;
 };
 
+/**
+ * 过滤HTML标签
+ */
+const removeHtmlLinkTags = (input: string): string => input.replace(/<a[^>]*>.*?<\/a>/ig, '');
+const removeHtmlTags = (input: string): string => input.replace(/<[^>]*>/g, '');
+
 export default {
   getFileSize,
+  removeHtmlLinkTags,
+  removeHtmlTags,
 };

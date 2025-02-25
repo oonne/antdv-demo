@@ -36,6 +36,7 @@
         <!-- 搜索 -->
         <template
           v-if="column.key === 'title'
+            || column.key === 'description'
             || column.key === 'content'
             || column.key === 'linkUrl'"
         >
@@ -73,6 +74,9 @@
           (item: any) => dayjs(item).format('YYYY-MM-DD'),
         ).join(' ~ ') }})
       </template>
+      <template v-if="column.key === 'description' && filters.description">
+        Description({{ filters.description[0] }})
+      </template>
       <template v-if="column.key === 'content' && filters.content">
         内容({{ filters.content[0] }})
       </template>
@@ -97,9 +101,14 @@
         {{ dayjs(record.publishDate).format('YYYY-MM-DD') }}
       </template>
 
+      <!-- Description -->
+      <template v-if="column.key === 'description'">
+        {{ record.description }}
+      </template>
+
       <!-- 内容 -->
       <template v-if="column.key === 'content'">
-        {{ record.content }}
+        {{ removeHtmlTags(record.content) }}
       </template>
 
       <!-- 链接 -->
@@ -179,13 +188,16 @@ import { message, TableColumnsType } from 'ant-design-vue';
 import dayjs from 'dayjs';
 import useTable from '@/hooks/use-table';
 import { blogApi } from '@/api/index';
-import { to, buildErrorMsg, Feedback } from '@/utils/index';
+import {
+  to, buildErrorMsg, Feedback, Common,
+} from '@/utils/index';
 import Icon from '@/components/icon-svg/index.vue';
 import type { IBlog } from '@/types/blog';
 
 const { VITE_BLOG_URL } = import.meta.env;
 const router = useRouter();
 const { confirmModal, copyText } = Feedback;
+const { removeHtmlTags } = Common;
 
 /*
  * 列表项
@@ -200,7 +212,6 @@ const columns = ref<TableColumnsType>([
   {
     title: '标题',
     key: 'title',
-    sorter: true,
     customFilterDropdown: true,
     resizable: true,
     width: 200,
@@ -211,15 +222,21 @@ const columns = ref<TableColumnsType>([
     sorter: true,
     customFilterDropdown: true,
     resizable: true,
+    width: 150,
+  },
+  {
+    title: 'Description',
+    key: 'description',
+    customFilterDropdown: true,
+    resizable: true,
     width: 200,
   },
   {
     title: '内容',
     key: 'content',
-    sorter: true,
     customFilterDropdown: true,
     resizable: true,
-    width: 300,
+    width: 150,
   },
   {
     title: '链接',
@@ -231,6 +248,7 @@ const columns = ref<TableColumnsType>([
   {
     title: '是否启用',
     key: 'isActive',
+    sorter: true,
     filters: [
       {
         text: '启用',
@@ -293,6 +311,9 @@ const getList = async () => {
     params.publishDate = filters.value.publishDate[0].map(
       (item: any) => dayjs(item).valueOf(),
     ).join(',');
+  }
+  if (filters.value.description) {
+    [params.description] = filters.value.description;
   }
   if (filters.value.content) {
     [params.content] = filters.value.content;

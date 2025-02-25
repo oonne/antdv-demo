@@ -59,10 +59,20 @@
       </a-form-item>
 
       <a-form-item label="内容">
-        <a-textarea
-          v-model:value="formData.content"
-          placeholder="请输入内容"
-        />
+        <div class="content-wrapper">
+          <Toolbar
+            style="border-bottom: 1px solid #ccc"
+            :editor="editorRef"
+            :default-config="toolbarConfig"
+            mode="simple"
+          />
+          <Editor
+            v-model="formData.content"
+            style="height: 300px; overflow-y: hidden;"
+            :default-config="editorConfig"
+            @on-created="handleCreated"
+          />
+        </div>
       </a-form-item>
 
       <a-button
@@ -77,19 +87,100 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import {
+  ref, shallowRef, onMounted, onBeforeUnmount,
+} from 'vue';
 import { message } from 'ant-design-vue';
 import { useRoute, useRouter } from 'vue-router';
 import dayjs from 'dayjs';
 import { emit as busEmit } from 'eventbus-typescript';
+import { i18nChangeLanguage, IToolbarConfig, IEditorConfig } from '@wangeditor/editor';
+import { Editor, Toolbar } from '@wangeditor/editor-for-vue';
+import { useLocaleStore } from '@/store/index';
 import { blogApi } from '@/api/index';
 import { to, buildErrorMsg } from '@/utils/index';
 import type { IBlog } from '@/types/blog';
 
 const route = useRoute();
 const router = useRouter();
+const localeStore = useLocaleStore();
 
-/* 表单 */
+/*
+ * 富文本编辑器
+ */
+// 编辑器实例，必须用 shallowRef
+const editorRef = shallowRef();
+// 编辑器配置
+const toolbarConfig: Partial<IToolbarConfig> = {
+  toolbarKeys: [
+    'redo', // 重做
+    'undo', // 撤销
+    'clearStyle', // 清除样式
+    '|',
+    'headerSelect', // 标题
+    'fontSize', // 字体大小
+    'fontFamily', // 字体
+    'lineHeight', // 行高
+    '|',
+    'color', // 文字颜色
+    'bgColor', // 背景色
+    'bold', // 加粗
+    'italic', // 斜体
+    'underline', // 下划线
+    'through', // 删除线
+    'sub', // 下标
+    'sup', // 上标
+    '|',
+    'justifyLeft', // 左对齐
+    'justifyRight', // 右对齐
+    'justifyCenter', // 居中
+    'justifyJustify', // 两端对齐
+    '|',
+    'blockquote', // 引用
+    'divider', // 分割线
+    'emotion', // 表情
+    'insertImage', // 插入图片
+    'insertLink', // 插入链接
+    'bulletedList', // 无序列表
+    'numberedList', // 有序列表
+    // 'todo', // 待办事项
+    '|',
+    'insertTable', // 插入表格
+    'insertTableRow', // 插入行
+    'deleteTableRow', // 删除行
+    'insertTableCol', // 插入列
+    'deleteTableCol', // 删除列
+    'tableHeader', // 表头
+    'tableFullWidth', // 表格铺满
+  ],
+};
+const editorConfig: Partial<IEditorConfig> = {
+  placeholder: '请输入内容',
+};
+
+// 编辑器创建成功
+const handleCreated = (editor: any) => {
+  editorRef.value = editor;
+  // 多语言处理
+  if (localeStore.locale === 'en_US') {
+    i18nChangeLanguage('en');
+  } else {
+    i18nChangeLanguage('zh-CN');
+  }
+};
+
+/* 组件销毁 */
+onBeforeUnmount(() => {
+  // 销毁编辑器
+  const editor = editorRef.value;
+  if (editor) {
+    editor.destroy();
+  }
+});
+
+/*
+ * 表单
+ */
 const formRef = ref();
 const formData = ref<IBlog>({
   blogId: '',
@@ -102,7 +193,9 @@ const formData = ref<IBlog>({
   keywords: '',
 });
 
-/* 查询详情 */
+/*
+ * 查询详情
+ */
 const getDetail = async () => {
   if (!route.query.blogId) {
     busEmit('UPDATE_PAGE_TITLE', '新增博客');
@@ -126,7 +219,9 @@ onMounted(async () => {
   getDetail();
 });
 
-/* 提交 */
+/*
+ * 提交
+ */
 const loading = ref(false);
 const onSubmit = async () => {
   if (loading.value) {
@@ -156,4 +251,14 @@ const onSubmit = async () => {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.app-form {
+  max-width: 800px;
+}
+
+.content-wrapper{
+  border-radius: 4px;
+  border: 1px solid #d9d9d9;
+  overflow: hidden;
+}
+</style>
