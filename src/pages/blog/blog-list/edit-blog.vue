@@ -78,7 +78,7 @@
       <a-button
         type="primary"
         :loading="loading"
-        @click="onSubmit"
+        @click="onSubmit(false)"
       >
         保存
       </a-button>
@@ -169,15 +169,6 @@ const handleCreated = (editor: any) => {
   }
 };
 
-/* 组件销毁 */
-onBeforeUnmount(() => {
-  // 销毁编辑器
-  const editor = editorRef.value;
-  if (editor) {
-    editor.destroy();
-  }
-});
-
 /*
  * 表单
  */
@@ -214,16 +205,11 @@ const getDetail = async () => {
   busEmit('UPDATE_PAGE_TITLE', `编辑博客 - ${formData.value.title}`);
 };
 
-/* 进入页面 */
-onMounted(async () => {
-  getDetail();
-});
-
 /*
  * 提交
  */
 const loading = ref(false);
-const onSubmit = async () => {
+const onSubmit = async (back = false) => {
   if (loading.value) {
     return;
   }
@@ -247,8 +233,54 @@ const onSubmit = async () => {
   }
 
   message.success('提交成功');
-  router.back();
+  if (!back) {
+    router.back();
+  }
 };
+
+/*
+ * 处理键盘事件
+ */
+const handleKeyDown = (e: KeyboardEvent) => {
+  // 检测Ctrl+S组合键 (Mac上是Command+S)
+  if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+    // 只在编辑的时候生效，创建的时候不生效
+    if (loading.value || !formData.value.blogId) {
+      return;
+    }
+    // 只在编辑器内容不为空的时候生效
+    if (!formData.value.content) {
+      return;
+    }
+
+    e.preventDefault(); // 阻止浏览器默认的保存行为
+    onSubmit(true);
+  }
+};
+
+/*
+ * 进入页面
+ */
+onMounted(async () => {
+  getDetail();
+
+  // 添加键盘事件监听器
+  window.addEventListener('keydown', handleKeyDown);
+});
+
+/*
+ * 组件销毁
+ */
+onBeforeUnmount(() => {
+  // 销毁编辑器
+  const editor = editorRef.value;
+  if (editor) {
+    editor.destroy();
+  }
+
+  // 移除键盘事件监听器
+  window.removeEventListener('keydown', handleKeyDown);
+});
 </script>
 
 <style scoped>
