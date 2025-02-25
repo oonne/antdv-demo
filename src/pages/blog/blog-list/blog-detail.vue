@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-v-html -->
 <template>
   <Loading
     v-if="loading"
@@ -58,7 +59,10 @@
       label="内容"
       :span="3"
     >
-      {{ detail.content }}
+      <div
+        class="blog-content"
+        v-html="detail.content"
+      />
     </a-descriptions-item>
   </a-descriptions>
 
@@ -115,4 +119,8 @@ onMounted(async () => {
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.blog-content {
+  max-width: 800px;
+}
+</style>
