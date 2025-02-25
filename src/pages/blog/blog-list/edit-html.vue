@@ -12,10 +12,11 @@
         {{ formData.title }}
       </a-form-item>
 
-      <a-form-item label="内容">
+      <a-form-item label="HTML源码">
         <a-textarea
           v-model:value="formData.content"
-          placeholder="请输入内容"
+          placeholder="请输入HTML"
+          :auto-size="{ minRows: 3, maxRows: 10 }"
         />
       </a-form-item>
 
