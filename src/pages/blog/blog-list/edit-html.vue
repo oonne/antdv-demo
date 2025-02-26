@@ -103,4 +103,8 @@ const onSubmit = async () => {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.app-form {
+  max-width: 800px;
+}
+</style>

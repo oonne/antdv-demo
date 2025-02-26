@@ -7,6 +7,9 @@
       >
         新增
       </a-button>
+      <a-button>
+        静态化
+      </a-button>
     </a-space>
 
     <div class="app-view-header-sum">
