@@ -40,4 +40,11 @@ export default {
       data,
     });
   },
+
+  // 静态化
+  generateBlog() {
+    return request({
+      url: '/blog/generate-blog',
+    });
+  },
 };

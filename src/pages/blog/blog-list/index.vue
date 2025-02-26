@@ -7,7 +7,9 @@
       >
         新增
       </a-button>
-      <a-button>
+      <a-button
+        @click="onGenerate"
+      >
         静态化
       </a-button>
     </a-space>
@@ -396,6 +398,19 @@ const onDelete = async (record: IBlog) => {
 
   message.success('删除成功');
   getList();
+};
+
+/*
+ * 静态化
+ */
+const onGenerate = async () => {
+  const [err] = await to(blogApi.generateBlog());
+  if (err) {
+    message.error(buildErrorMsg({ err, defaultMsg: '静态化失败' }));
+    return;
+  }
+
+  message.success('开始生成HTML');
 };
 </script>
 
