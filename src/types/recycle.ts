@@ -1,5 +1,5 @@
-// 回收类型: 1账号 2配置
-export type RecycleType = 1 | 2;
+// 回收类型: 1账号 2配置 3博客
+export type RecycleType = 1 | 2 | 3;
 
 /* 回收站 */
 export interface IRecycle {
