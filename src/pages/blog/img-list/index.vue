@@ -140,7 +140,6 @@ const columns = ref<TableColumnsType>([
     title: '#',
     key: 'index',
     width: 50,
-    fixed: 'left',
   },
   {
     title: '预览',
@@ -175,7 +174,6 @@ const columns = ref<TableColumnsType>([
     key: 'operation',
     resizable: true,
     width: 150,
-    fixed: 'right',
   },
 ]);
 
