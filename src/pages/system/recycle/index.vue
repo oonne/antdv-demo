@@ -134,6 +134,14 @@ const columns = ref<TableColumnsType>([
         text: '账号',
         value: 1,
       },
+      {
+        text: '配置',
+        value: 2,
+      },
+      {
+        text: '博客',
+        value: 3,
+      },
     ],
     resizable: true,
     width: 100,
