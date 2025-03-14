@@ -282,9 +282,4 @@ const onUpload = async (event: IUploadEvent) => {
 </script>
 
 <style scoped>
-.copy-icon {
-  fill: var(--primary-color);
-  width: 16px;
-  height: 16px;
-}
 </style>
