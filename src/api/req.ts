@@ -19,7 +19,7 @@ const getLang = () => localStorage.getItem('LOCALE') || '';
 
 /*
  * 生成请求id
- * 格式： 来源 - 毫秒时间戳 - UUID末4位 - 4位随机数
+ * 格式： 毫秒时间戳 - UUID末4位 - 4位随机数
  */
 const generateReqId = () => {
   const timestamp = new Date().getTime();
