@@ -91,6 +91,10 @@ const calcLoginPow = async (name: string) => {
   }
 
   const { salt, result } = res.data;
+  if (!salt || !result) {
+    return '';
+  }
+
   let powKey = '';
 
   // eslint-disable-next-line no-constant-condition
