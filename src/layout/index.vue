@@ -59,7 +59,7 @@ onBeforeMount(() => {
 useInterval(() => {
   const staffStore = useStaffStore();
   staffStore.refreshToken();
-}, 12 * 60 * 60 * 1000);
+}, 60 * 60 * 1000);
 </script>
 
 <style scoped>
