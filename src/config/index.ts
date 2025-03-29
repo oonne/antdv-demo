@@ -12,10 +12,9 @@ export default {
 
   // token刷新时间
   tokenRefreshTime: 1000 * 60 * 60 * 12,
+  // 登录pow计算位数
+  loginPowLength: 4,
 
   // 分页大小
   pageSize: 10,
-
-  // 登录pow计算位数
-  loginPowLength: 4,
 };
