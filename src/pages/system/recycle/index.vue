@@ -42,7 +42,7 @@
     <!-- 显示当前的搜索条件 -->
     <template #headerCell="{ column }">
       <template v-if="column.key === 'type' && filters.type">
-        类型({{ filters.type[0] }})
+        类型({{ getRecycleTypeName(filters.type[0]) }})
       </template>
       <template v-if="column.key === 'content' && filters.content">
         内容({{ filters.content[0] }})

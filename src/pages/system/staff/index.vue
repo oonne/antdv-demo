@@ -55,6 +55,9 @@
       <template v-if="column.key === 'isActive' && filters.isActive">
         是否启用({{ filters.isActive[0] === true ? '启用' : '禁用' }})
       </template>
+      <template v-if="column.key === 'role' && filters.role">
+        角色({{ getRoleName(filters.role[0]) }})
+      </template>
     </template>
 
     <template #bodyCell="{ column, record, index }">
