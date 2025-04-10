@@ -296,6 +296,7 @@ const {
   onResizeColumn,
   rowClassName,
   rangePresets,
+  getDateFilter,
 } = useTable();
 
 /*
@@ -311,9 +312,7 @@ const getList = async () => {
     [params.title] = filters.value.title;
   }
   if (filters.value.publishDate) {
-    params.publishDate = filters.value.publishDate[0].map(
-      (item: any) => dayjs(item).valueOf(),
-    ).join(',');
+    params.publishDate = getDateFilter(filters.value.publishDate[0]);
   }
   if (filters.value.description) {
     [params.description] = filters.value.description;

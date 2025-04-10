@@ -106,6 +106,19 @@ const useTable = () => {
   ]);
 
   /*
+   * 获取筛选的日期区间
+   */
+  const getDateFilter = (dateFilter: dayjs.Dayjs[]) => {
+    console.log(dateFilter);
+    if (dateFilter.length !== 2) {
+      return undefined;
+    }
+    const startDate = dateFilter[0].startOf('day');
+    const endDate = dateFilter[1].endOf('day');
+    return `${startDate.valueOf()},${endDate.valueOf()}`;
+  };
+
+  /*
    * 返回的属性和方法
    */
   return {
@@ -120,6 +133,7 @@ const useTable = () => {
     onResizeColumn,
     rowClassName,
     rangePresets,
+    getDateFilter,
   };
 };
 
