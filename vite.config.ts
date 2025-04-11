@@ -11,6 +11,7 @@ export default defineConfig({
     svgLoader(),
     CodeInspectorPlugin({
       bundler: 'vite',
+      editor: 'cursor',
     }),
   ],
   resolve: {

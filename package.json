@@ -20,7 +20,7 @@
     "ant-design-vue": "^4.2.5",
     "axios": "^1.7.2",
     "big.js": "^6.2.1",
-    "code-inspector-plugin": "^0.5.2",
+    "code-inspector-plugin": "^0.20.9",
     "crypto-js": "^4.2.0",
     "dayjs": "^1.11.11",
     "eslint": "^8.57.0",
