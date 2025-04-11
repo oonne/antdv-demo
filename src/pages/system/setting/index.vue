@@ -3,7 +3,7 @@
     <a-space>
       <a-button
         type="primary"
-        @click="router.push({ name: 'edit-setting' })"
+        @click="routerJump($event, { name: 'edit-setting' })"
       >
         新增
       </a-button>
@@ -91,14 +91,20 @@
         <a-button
           size="small"
           type="link"
-          @click="router.push({ name: 'setting-detail', query: { settingId: record.settingId } })"
+          @click="routerJump($event, {
+            name: 'setting-detail',
+            query: { settingId: record.settingId },
+          })"
         >
           详情
         </a-button>
         <a-button
           size="small"
           type="link"
-          @click="router.push({ name: 'edit-setting', query: { settingId: record.settingId } })"
+          @click="routerJump($event, {
+            name: 'edit-setting',
+            query: { settingId: record.settingId },
+          })"
         >
           编辑
         </a-button>
@@ -117,15 +123,15 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
 import { message, TableColumnsType } from 'ant-design-vue';
 import dayjs from 'dayjs';
 import useTable from '@/hooks/use-table';
 import { settingApi } from '@/api/index';
 import { to, buildErrorMsg, Feedback } from '@/utils/index';
+import useLink from '@/hooks/use-link';
 import type { ISetting } from '@/types/setting';
 
-const router = useRouter();
+const { routerJump } = useLink();
 const { confirmModal } = Feedback;
 
 /*

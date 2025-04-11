@@ -83,7 +83,10 @@
         <a-button
           size="small"
           type="link"
-          @click="router.push({ name: 'recycle-detail', query: { recycleId: record.recycleId } })"
+          @click="routerJump($event, {
+            name: 'recycle-detail',
+            query: { recycleId: record.recycleId },
+          })"
         >
           详情
         </a-button>
@@ -105,15 +108,15 @@
 import { ref, onMounted } from 'vue';
 import { message, TableColumnsType } from 'ant-design-vue';
 import dayjs from 'dayjs';
-import { useRouter } from 'vue-router';
 import useTable from '@/hooks/use-table';
 import { recycleApi } from '@/api/index';
 import { to, buildErrorMsg, Feedback } from '@/utils/index';
 import TextContent from '@/components/text-content/index';
+import useLink from '@/hooks/use-link';
 import type { IRecycle } from '@/types/recycle';
 import { getRecycleTypeName, getRecycleTypeFilters } from './recycle-utils';
 
-const router = useRouter();
+const { routerJump } = useLink();
 const { confirmModal } = Feedback;
 
 /*

@@ -3,7 +3,7 @@
     <a-space>
       <a-button
         type="primary"
-        @click="router.push({ name: 'edit-staff' })"
+        @click="routerJump($event, { name: 'edit-staff' })"
       >
         新增
       </a-button>
@@ -113,7 +113,10 @@
         <a-button
           size="small"
           type="link"
-          @click="router.push({ name: 'edit-staff', query: { staffId: record.staffId } })"
+          @click="routerJump($event, {
+            name: 'edit-staff',
+            query: { staffId: record.staffId },
+          })"
         >
           编辑
         </a-button>
@@ -141,7 +144,6 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import { message, TableColumnsType } from 'ant-design-vue';
 import dayjs from 'dayjs';
@@ -150,10 +152,11 @@ import { useStaffStore } from '@/store/index';
 import { staffApi } from '@/api/index';
 import { to, buildErrorMsg, Feedback } from '@/utils/index';
 import Icon from '@/components/icon-svg/index.vue';
+import useLink from '@/hooks/use-link';
 import type { IStaff } from '@/types/staff';
 import { getRoleName, getRoleFilters } from './staff-utils';
 
-const router = useRouter();
+const { routerJump } = useLink();
 const { confirmModal, copyText } = Feedback;
 const staffStore = useStaffStore();
 const { staffInfo } = storeToRefs(staffStore);
