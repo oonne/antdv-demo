@@ -62,7 +62,7 @@ const getDetail = async () => {
     return;
   }
 
-  const [err, res] = await to(blogApi.getDetail({ blogId: route.query.blogId }));
+  const [err, res] = await blogApi.getDetail({ blogId: route.query.blogId });
   if (err) {
     message.error(buildErrorMsg({ err, defaultMsg: '查询失败' }));
     return;
@@ -90,7 +90,7 @@ const onSubmit = async () => {
   }
 
   loading.value = true;
-  const [err] = await to(blogApi.updateBlog(formData.value));
+  const [err] = await blogApi.updateBlog(formData.value);
   loading.value = false;
 
   if (err) {

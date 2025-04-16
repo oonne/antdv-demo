@@ -36,7 +36,7 @@ import { message } from 'ant-design-vue';
 import { useRoute } from 'vue-router';
 import dayjs from 'dayjs';
 import { recycleApi } from '@/api/index';
-import { to, buildErrorMsg } from '@/utils/index';
+import { buildErrorMsg } from '@/utils/index';
 import Loading from '@/components/loading/index.vue';
 import TextContent from '@/components/text-content/index';
 import type { IRecycle } from '@/types/recycle';
@@ -58,7 +58,7 @@ const getDetail = async () => {
   }
 
   loading.value = true;
-  const [err, res] = await to(recycleApi.getDetail({ recycleId: route.query.recycleId }));
+  const [err, res] = await recycleApi.getDetail({ recycleId: route.query.recycleId });
   loading.value = false;
 
   if (err) {

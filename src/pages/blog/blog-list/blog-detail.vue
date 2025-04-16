@@ -75,7 +75,7 @@ import { message } from 'ant-design-vue';
 import { useRoute } from 'vue-router';
 import dayjs from 'dayjs';
 import { blogApi } from '@/api/index';
-import { to, buildErrorMsg, Feedback } from '@/utils/index';
+import { buildErrorMsg, Feedback } from '@/utils/index';
 import Loading from '@/components/loading/index.vue';
 import type { IBlog } from '@/types/blog';
 
@@ -102,7 +102,7 @@ const getDetail = async () => {
   }
 
   loading.value = true;
-  const [err, res] = await to(blogApi.getDetail({ blogId: route.query.blogId }));
+  const [err, res] = await blogApi.getDetail({ blogId: route.query.blogId });
   loading.value = false;
 
   if (err) {

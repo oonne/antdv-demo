@@ -194,7 +194,7 @@ import dayjs from 'dayjs';
 import useTable from '@/hooks/use-table';
 import { blogApi } from '@/api/index';
 import {
-  to, buildErrorMsg, Feedback, Common,
+  buildErrorMsg, Feedback, Common,
 } from '@/utils/index';
 import Icon from '@/components/icon-svg/index.vue';
 import type { IBlog } from '@/types/blog';
@@ -331,7 +331,7 @@ const getList = async () => {
     params.sortOrder = sorter.value.order === 'ascend' ? 'asc' : 'desc';
   }
 
-  const [err, res] = await to(blogApi.getList(params));
+  const [err, res] = await blogApi.getList(params);
   loading.value = false;
 
   if (err) {
@@ -355,10 +355,10 @@ onMounted(() => {
  * 启用/禁用
  */
 const onChangeActive = async (record: IBlog) => {
-  const [err] = await to(blogApi.updateBlog({
+  const [err] = await blogApi.updateBlog({
     blogId: record.blogId,
     isActive: record.isActive,
-  }));
+  });
 
   if (err) {
     message.error(buildErrorMsg({ err, defaultMsg: '操作失败' }));
@@ -387,7 +387,7 @@ const onDelete = async (record: IBlog) => {
     return;
   }
 
-  const [err] = await to(blogApi.deleteBlog({ blogId: record.blogId }));
+  const [err] = await blogApi.deleteBlog({ blogId: record.blogId });
   if (err) {
     message.error(buildErrorMsg({ err, defaultMsg: '删除失败' }));
     return;
@@ -401,7 +401,7 @@ const onDelete = async (record: IBlog) => {
  * 静态化
  */
 const onGenerate = async () => {
-  const [err] = await to(blogApi.generateBlog());
+  const [err] = await blogApi.generateBlog();
   if (err) {
     message.error(buildErrorMsg({ err, defaultMsg: '静态化失败' }));
     return;

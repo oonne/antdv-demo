@@ -2,7 +2,7 @@ import { ref } from 'vue';
 import { defineStore } from 'pinia';
 import config from '@/config/index';
 import { authApi } from '@/api/index';
-import { to, Utils } from '@/utils/index';
+import { Utils } from '@/utils/index';
 import type { IStaff } from '@/types/staff';
 
 const { randomChars } = Utils;
@@ -89,10 +89,10 @@ export default defineStore('staff', () => {
       return;
     }
 
-    const [err, res] = await to(authApi.refreshToken({
+    const [err, res] = await authApi.refreshToken({
       staffId: staffInfo.value.staffId,
       refreshToken: refreshTokenValue,
-    }));
+    });
     if (err) {
       // 换票失败，退出登录
       if (err?.code === 1001003) {

@@ -150,7 +150,7 @@ import dayjs from 'dayjs';
 import useTable from '@/hooks/use-table';
 import { useStaffStore } from '@/store/index';
 import { staffApi } from '@/api/index';
-import { to, buildErrorMsg, Feedback } from '@/utils/index';
+import { buildErrorMsg, Feedback } from '@/utils/index';
 import Icon from '@/components/icon-svg/index.vue';
 import useLink from '@/hooks/use-link';
 import type { IStaff } from '@/types/staff';
@@ -263,7 +263,7 @@ const getList = async () => {
     params.sortOrder = sorter.value.order === 'ascend' ? 'asc' : 'desc';
   }
 
-  const [err, res] = await to(staffApi.getList(params));
+  const [err, res] = await staffApi.getList(params);
   loading.value = false;
 
   if (err) {
@@ -302,10 +302,10 @@ const onChangeActive = async (record: IStaff) => {
     return;
   }
 
-  const [err] = await to(staffApi.updateStaff({
+  const [err] = await staffApi.updateStaff({
     staffId: record.staffId,
     isActive: record.isActive,
-  }));
+  });
 
   if (err) {
     message.error(buildErrorMsg({ err, defaultMsg: '操作失败' }));
@@ -334,7 +334,7 @@ const onResetToken = async (record: IStaff) => {
     return;
   }
 
-  const [err] = await to(staffApi.updateRefreshToken({ staffId: record.staffId }));
+  const [err] = await staffApi.updateRefreshToken({ staffId: record.staffId });
   if (err) {
     message.error(buildErrorMsg({ err, defaultMsg: '重置登录态失败' }));
     return;
@@ -357,7 +357,7 @@ const onDelete = async (record: IStaff) => {
     return;
   }
 
-  const [err] = await to(staffApi.deleteStaff({ staffId: record.staffId }));
+  const [err] = await staffApi.deleteStaff({ staffId: record.staffId });
   if (err) {
     message.error(buildErrorMsg({ err, defaultMsg: '删除失败' }));
     return;

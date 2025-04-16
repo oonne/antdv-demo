@@ -78,7 +78,7 @@ const getDetail = async () => {
     return;
   }
 
-  const [err, res] = await to(settingApi.getDetail({ settingId: route.query.settingId }));
+  const [err, res] = await settingApi.getDetail({ settingId: route.query.settingId });
   if (err) {
     message.error(buildErrorMsg({ err, defaultMsg: '查询失败' }));
     return;
@@ -105,10 +105,10 @@ const onSubmit = async () => {
   }
 
   loading.value = true;
-  const [err] = await to(
+  const [err] = await (
     formData.value.settingId
       ? settingApi.updateSetting(formData.value)
-      : settingApi.addSetting(formData.value),
+      : settingApi.addSetting(formData.value)
   );
   loading.value = false;
 

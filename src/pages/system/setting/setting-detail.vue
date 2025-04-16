@@ -38,7 +38,7 @@ import { message } from 'ant-design-vue';
 import { useRoute } from 'vue-router';
 import dayjs from 'dayjs';
 import { settingApi } from '@/api/index';
-import { to, buildErrorMsg } from '@/utils/index';
+import { buildErrorMsg } from '@/utils/index';
 import Loading from '@/components/loading/index.vue';
 import TextContent from '@/components/text-content/index';
 import type { ISetting } from '@/types/setting';
@@ -60,7 +60,7 @@ const getDetail = async () => {
   }
 
   loading.value = true;
-  const [err, res] = await to(settingApi.getDetail({ settingId: route.query.settingId }));
+  const [err, res] = await settingApi.getDetail({ settingId: route.query.settingId });
   loading.value = false;
 
   if (err) {

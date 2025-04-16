@@ -122,7 +122,7 @@ import dayjs from 'dayjs';
 import useTable from '@/hooks/use-table';
 import { fileApi } from '@/api/index';
 import {
-  to, buildErrorMsg, Feedback, Common,
+  buildErrorMsg, Feedback, Common,
 } from '@/utils/index';
 import Icon from '@/components/icon-svg/index.vue';
 import type { IFile } from '@/types/file';
@@ -212,7 +212,7 @@ const getList = async () => {
     params.sortOrder = sorter.value.order === 'ascend' ? 'asc' : 'desc';
   }
 
-  const [err, res] = await to(fileApi.getList(params));
+  const [err, res] = await fileApi.getList(params);
   loading.value = false;
 
   if (err) {
@@ -246,7 +246,7 @@ const onDelete = async (record: IFile) => {
     return;
   }
 
-  const [err] = await to(fileApi.deleteFile({ fileId: record.fileId }));
+  const [err] = await fileApi.deleteFile({ fileId: record.fileId });
   if (err) {
     message.error(buildErrorMsg({ err, defaultMsg: '删除失败' }));
     return;
@@ -267,7 +267,7 @@ const onUpload = async (event: IUploadEvent) => {
   }
 
   uploading.value = true;
-  const [err] = await to(fileApi.upload({ file: event.file, type: 'img' }));
+  const [err] = await fileApi.upload({ file: event.file, type: 'img' });
   uploading.value = false;
 
   if (err) {

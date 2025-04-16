@@ -69,7 +69,7 @@ const loading = ref(false);
  */
 const initSystem = async () => {
   loading.value = true;
-  const [err] = await to(authApi.init());
+  const [err] = await authApi.init();
   loading.value = false;
   if (err) {
     message.error(buildErrorMsg({ err, defaultMsg: '初始化失败' }));
@@ -83,9 +83,9 @@ const initSystem = async () => {
  * 计算登录pow
  */
 const calcLoginPow = async (name: string) => {
-  const [err, res] = await to(authApi.getLoginPow({
+  const [err, res] = await authApi.getLoginPow({
     name,
-  }));
+  });
   if (err) {
     return '';
   }
@@ -140,11 +140,11 @@ const onLogin = async () => {
     return;
   }
 
-  const [err, res] = await to(authApi.login({
+  const [err, res] = await authApi.login({
     powKey,
     name: formState.value.name,
     password: createHash(formState.value.password, 32),
-  }));
+  });
   loading.value = false;
 
   if (err) {

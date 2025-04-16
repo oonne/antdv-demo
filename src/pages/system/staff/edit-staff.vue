@@ -88,7 +88,7 @@ const getDetail = async () => {
     return;
   }
 
-  const [err, res] = await to(staffApi.getDetail({ staffId: route.query.staffId }));
+  const [err, res] = await staffApi.getDetail({ staffId: route.query.staffId });
   if (err) {
     message.error(buildErrorMsg({ err, defaultMsg: '查询失败' }));
     return;
@@ -128,10 +128,10 @@ const onSubmit = async () => {
   }
 
   loading.value = true;
-  const [err] = await to(
+  const [err] = await (
     formData.value.staffId
       ? staffApi.updateStaff(params)
-      : staffApi.addStaff(params),
+      : staffApi.addStaff(params)
   );
   loading.value = false;
 

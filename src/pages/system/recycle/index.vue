@@ -110,7 +110,7 @@ import { message, TableColumnsType } from 'ant-design-vue';
 import dayjs from 'dayjs';
 import useTable from '@/hooks/use-table';
 import { recycleApi } from '@/api/index';
-import { to, buildErrorMsg, Feedback } from '@/utils/index';
+import { buildErrorMsg, Feedback } from '@/utils/index';
 import TextContent from '@/components/text-content/index';
 import useLink from '@/hooks/use-link';
 import type { IRecycle } from '@/types/recycle';
@@ -205,7 +205,7 @@ const getList = async () => {
     params.sortOrder = sorter.value.order === 'ascend' ? 'asc' : 'desc';
   }
 
-  const [err, res] = await to(recycleApi.getList(params));
+  const [err, res] = await recycleApi.getList(params);
   loading.value = false;
 
   if (err) {
@@ -239,7 +239,7 @@ const onDelete = async (record: IRecycle) => {
     return;
   }
 
-  const [err] = await to(recycleApi.deleteRecycle({ recycleId: record.recycleId }));
+  const [err] = await recycleApi.deleteRecycle({ recycleId: record.recycleId });
   if (err) {
     message.error(buildErrorMsg({ err, defaultMsg: '删除失败' }));
     return;

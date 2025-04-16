@@ -1,7 +1,7 @@
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 import { emit as busEmit } from 'eventbus-typescript';
 import config from '@/config/index';
-import { Utils } from '@/utils/index';
+import { Utils, to } from '@/utils/index';
 
 const { VITE_BASE_URL } = import.meta.env;
 const { version, apiTimeOut } = config;
@@ -70,4 +70,12 @@ instance.interceptors.response.use((res) => {
   return Promise.reject(data);
 });
 
-export default instance;
+/*
+ * 异步封装
+ */
+const req = async (options: AxiosRequestConfig) => {
+  const [err, res] = await to(instance(options));
+  return [err, res];
+};
+
+export default req;

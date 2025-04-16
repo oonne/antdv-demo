@@ -127,7 +127,7 @@ import { message, TableColumnsType } from 'ant-design-vue';
 import dayjs from 'dayjs';
 import useTable from '@/hooks/use-table';
 import { settingApi } from '@/api/index';
-import { to, buildErrorMsg, Feedback } from '@/utils/index';
+import { buildErrorMsg, Feedback } from '@/utils/index';
 import useLink from '@/hooks/use-link';
 import type { ISetting } from '@/types/setting';
 
@@ -219,7 +219,7 @@ const getList = async () => {
     params.sortOrder = sorter.value.order === 'ascend' ? 'asc' : 'desc';
   }
 
-  const [err, res] = await to(settingApi.getList(params));
+  const [err, res] = await settingApi.getList(params);
   loading.value = false;
 
   if (err) {
@@ -253,7 +253,7 @@ const onDelete = async (record: ISetting) => {
     return;
   }
 
-  const [err] = await to(settingApi.deleteSetting({ settingId: record.settingId }));
+  const [err] = await settingApi.deleteSetting({ settingId: record.settingId });
   if (err) {
     message.error(buildErrorMsg({ err, defaultMsg: '删除失败' }));
     return;
