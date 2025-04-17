@@ -164,6 +164,16 @@ getOpenKey();
  */
 const onSelectMenu = (selectedItem: any) => {
   const key = selectedItem.key as string;
+  const domEvent = selectedItem.domEvent as MouseEvent;
+
+  // 如果按住ctrl再点击则新窗口打开
+  if (domEvent.ctrlKey || domEvent.metaKey) {
+    const resolved = router.resolve({ name: key });
+    window.open(resolved.href, '_blank');
+    return;
+  }
+
+  // 正常跳转
   router.push({ name: key });
 };
 
