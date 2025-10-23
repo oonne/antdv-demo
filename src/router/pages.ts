@@ -68,7 +68,7 @@ const pages: RouteRecordRaw[] = [
     path: '/system',
     component: Layout,
     children: [
-      // 成员管理
+      // 账号管理
       {
         path: 'staff',
         component: () => import('@/pages/system/staff/index.vue'),
@@ -78,14 +78,14 @@ const pages: RouteRecordRaw[] = [
           title: '账号管理',
         },
       },
-      // 新增/编辑成员
+      // 新增/编辑账号
       {
         path: 'edit-staff',
         component: () => import('@/pages/system/staff/edit-staff.vue'),
         name: 'edit-staff',
         meta: {
           sideKey: 'staff',
-          title: '新增/编辑成员',
+          title: '新增/编辑账号',
         },
       },
       // 回收站
