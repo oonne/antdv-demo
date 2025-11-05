@@ -95,13 +95,13 @@ defineEmits(['update:collapsed']);
  * 筛选出显示的菜单
  */
 const sideMenuList = computed(() => {
-  const userRole = staffStore.staffInfo.role || 0;
+  const sfaffRole = staffStore.staffInfo.role || 0;
 
   const filterMenuByRole = (menuList: ISideConfig[]): ISideConfig[] => {
     const result: ISideConfig[] = [];
 
     menuList.forEach((menu) => {
-      const hasPermission = !menu.roles || menu.roles.includes(userRole);
+      const hasPermission = !menu.roles || menu.roles.includes(sfaffRole);
 
       if (!hasPermission) {
         return;
