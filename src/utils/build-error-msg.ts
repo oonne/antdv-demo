@@ -13,7 +13,6 @@ interface IProps {
  * 构造错误提示语
  * params {object} err 错误对象
  * params {string} defaultMsg 默认错误提示语
- * return Promise<boolean> true: 确认 false: 取消
  */
 const buildErrorMsg = (props: IProps): string => {
   const { err, defaultMsg } = props;
