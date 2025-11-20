@@ -53,6 +53,13 @@
 .app-detail-loading {
   margin: 30px auto;
 }
+.app-detail-top {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 12px;
+  gap: 8px;
+}
 
 /* 复制按钮 */
 .copy-icon {
