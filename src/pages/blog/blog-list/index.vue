@@ -3,7 +3,7 @@
     <a-space>
       <a-button
         type="primary"
-        @click="router.push({ name: 'edit-blog' })"
+        @click="routerJump($event, { name: 'edit-blog' })"
       >
         新增
       </a-button>
@@ -155,21 +155,30 @@
         <a-button
           size="small"
           type="link"
-          @click="router.push({ name: 'blog-detail', query: { blogId: record.blogId } })"
+          @click="routerJump($event, {
+            name: 'blog-detail',
+            query: { blogId: record.blogId },
+          })"
         >
           详情
         </a-button>
         <a-button
           size="small"
           type="link"
-          @click="router.push({ name: 'edit-blog', query: { blogId: record.blogId } })"
+          @click="routerJump($event, {
+            name: 'edit-blog',
+            query: { blogId: record.blogId },
+          })"
         >
           编辑
         </a-button>
         <a-button
           size="small"
           type="link"
-          @click="router.push({ name: 'edit-html', query: { blogId: record.blogId } })"
+          @click="routerJump($event, {
+            name: 'edit-html',
+            query: { blogId: record.blogId },
+          })"
         >
           编辑HTML
         </a-button>
@@ -188,7 +197,6 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
 import { message, TableColumnsType } from 'ant-design-vue';
 import dayjs from 'dayjs';
 import useTable from '@/hooks/use-table';
@@ -196,11 +204,12 @@ import { blogApi } from '@/api/index';
 import {
   buildErrorMsg, Feedback, Common,
 } from '@/utils/index';
+import useLink from '@/hooks/use-link';
 import Icon from '@/components/icon-svg/index.vue';
 import type { IBlog } from '@/types/blog';
 
 const { VITE_BLOG_URL } = import.meta.env;
-const router = useRouter();
+const { routerJump } = useLink();
 const { confirmModal, copyText } = Feedback;
 const { removeHtmlTags } = Common;
 
