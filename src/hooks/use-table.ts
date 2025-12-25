@@ -109,7 +109,6 @@ const useTable = () => {
    * 获取筛选的日期区间
    */
   const getDateFilter = (dateFilter: dayjs.Dayjs[]) => {
-    console.log(dateFilter);
     if (dateFilter.length !== 2) {
       return undefined;
     }
